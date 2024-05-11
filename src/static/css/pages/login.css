@@ -1,0 +1,84 @@
+/* this is for Mobile */
+.login-page-container{
+    height: 100vh;
+}
+
+.logo-container{
+    position: relative;
+    width: 65%;
+    display: flexbox;
+    margin: 5em auto 0em auto;
+    padding-bottom:0;
+    text-align: center;
+}
+
+.login-logo{
+    max-width: 100%;
+    text-align: center;
+}
+
+.begin-session-title{
+    font-weight: 600;
+    font-size: x-large;
+    padding: -10%;
+    margin: 0px;
+}
+
+.login-form-container{
+    position: relative;
+    /* top: 50%;
+    transform: translateY(-50%); */
+    width: 80%;
+    padding: 2em;
+    margin: auto;
+    background: #fff;
+    text-align: center;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.login-input-username, .login-input-password{
+    width: 70%;
+    margin: 1em auto;
+    padding: 1em;
+    border-radius: 5px;
+    border:1px solid #dbd9d9;
+
+}
+
+.btn-one{
+    width: 60%;
+    margin: auto;
+    padding: 1em;
+    border-radius: 10px;
+    border: none;
+    background-color: #ffb1c5;
+    color: #262626;
+}
+
+.btn-one:focus{
+    background-color: #e38fa4;
+}
+
+
+/* this is for desktop */
+@media only screen and (min-width: 770px) {
+    .logo-container{
+        position: relative;
+        width: 35%;
+        display: flexbox;
+        margin: 3em auto 0em auto;
+        padding-bottom:0;
+        text-align: center;
+    }
+    
+    .login-form-container{
+        width: 60%;
+        padding: 0;
+    }
+
+}

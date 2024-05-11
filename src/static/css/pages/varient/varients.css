@@ -1,0 +1,52 @@
+.varient-list-container{
+    display: flex;
+    gap: 1em;
+    height: 100%;
+    flex-direction: column;
+}
+
+.generate-barcode-button{
+    padding: 1em;
+}
+.generate-barcode-button button{
+    border: none;
+    padding: 1em;
+    border-radius: 5px;
+    background-color: pink;
+}
+
+.generate-barcode-button button:focus{
+    background-color: rgb(228, 161, 172);
+}
+
+
+#varient-page-container{
+    padding: 1em;
+    padding: 1em;
+    height: 85vh;
+    padding-bottom: 5em;
+    overflow: scroll;
+    background-color: rgb(245, 245, 245);
+}
+
+#varient-page-container h2{
+   font-weight: 600;
+   font-size: 25pt;
+   padding-bottom: 1em;
+   text-align: left;
+}
+
+
+/* Desktop Style */
+@media only screen and (min-width: 770px) {
+
+    #varient-page-container{
+        width: 87%;
+        padding-left: 5em;
+        height: 100vh;
+        position: absolute;
+        right:0;
+    }
+    
+
+}

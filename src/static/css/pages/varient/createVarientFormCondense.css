@@ -1,0 +1,79 @@
+.create-varient-form-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.432);
+}
+
+.create-varient-form-wrapper{
+    position: relative;
+    margin: auto;
+    top: 40%;
+    border-radius: 1em;
+    transform: translateY(-40%);
+    width: 90%;
+    background-color: #fff;
+}
+
+.create-varient-form-wrapper h3{
+    padding-left: 1em;
+}
+
+
+
+/*  Form */
+.create-varient-condense-Form {
+    padding: 1em;
+    text-align: right;
+}
+
+.create-varient-condense-Form input{
+    margin: auto;
+    width: 90%;
+    margin-bottom: 2em;
+    border-radius: 1em;
+    border: 1px solid rgb(215, 215, 215);
+    padding: 1em;
+    border-radius: 5px;
+}
+
+
+.pop-up-create-varient-button{
+    border: none;
+    padding: 1em;
+    border-radius: 5px;
+    background-color: pink;
+    color: #383838;
+}   
+
+
+
+/* Desktop Style */
+@media only screen and (min-width: 770px) {
+
+    #create-varient-form-container{
+        width: 89%;
+        padding-left: 5em;
+        height: 100vh;
+        position: absolute;
+        right:0
+        /* overflow: hidden; */
+    }
+
+    .create-varient-form-wrapper{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45%;
+        /* height: 25em; */
+    }
+
+    .create-varient-condense-Form input{
+        width: 95%;
+    }
+
+}

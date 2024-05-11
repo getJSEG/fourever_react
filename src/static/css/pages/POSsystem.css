@@ -1,0 +1,214 @@
+
+#pos-system-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: center;
+}
+  
+
+.sku-input-container{
+    /* border: 1px solid red; */
+    /* margin: 1em auto; */
+    position: relative;
+    top: 0;
+    background-color: rgb(28, 28, 28);
+    /* margin: auto; */
+}
+
+.sku-input-container form{
+    /* width: 100%; */
+    height: 10em;
+}
+
+.sku-input-container form input{
+    width: 50%;
+    position: relative;
+    padding: 0 10em 10em .5em;
+    /* height: 100%; */
+    border: none;
+    text-align: start;
+    top:0;
+    vertical-align: text-top;
+    /* border-radius: 10px; */
+    background-color: rgb(28, 28, 28);
+    color: #fff;
+}
+
+/* all of table style */
+.listitems-container{
+    height: 20em;
+    margin: auto;
+    overflow:scroll;
+    background-color: rgb(39, 39, 39);
+}
+
+table
+{ 
+    width: 100%;
+    margin: auto;
+    padding: 3em;
+    border-collapse: collapse; 
+    overflow-y: auto;
+}
+
+
+/* table head */
+thead { 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgb(55, 55, 55);
+}
+thead  tr th{ 
+    font-weight: 600;
+    color: #fff
+}
+
+#pos-line-item{
+    text-align: left;
+    padding-left: 2em;
+}
+
+#pos-up-item{
+    text-align: right;
+}
+#pos-total-item{
+    text-align: right;
+    padding-right: 1em;
+}
+
+#pos-qty-item{
+    width: 1em;
+    text-align: right;
+}
+#pos-delete-item{
+    width: 1.5em;
+}
+
+/* table body */
+
+
+
+/* Payament information */
+.pos-payment-information{
+    width: 100%;
+    height: 12em;
+    display: flex;
+    
+    background-color: rgb(28, 28, 28);
+    color:#fff;
+}
+
+/* Line Items and discount */
+.item-and-discount-contariner{
+    padding: 1em;
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.item-and-discount-labels{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* calculated prive style */
+.calculated-price{
+    width: 30%;
+    padding: 1em;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.calculated-price-label{
+    display: flex;
+    flex-direction: column;
+    padding-right: 1em;
+}
+
+/* payment */
+.balance-due{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.balance-due button {
+    background-color: #ffb1c5;
+    padding: .5em 1em;
+    margin: 1em;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.include_tax{
+    display: block;
+}
+
+.dont-include-tax{
+    display: none;
+}
+
+.balance-due button:hover {
+    background-color: #eca0b3;
+}
+
+.balance-due button:focus {
+    background-color: #cf8396;
+}
+
+.balance-due h2{
+    font-weight: 600;
+    color: #333;
+}
+
+@media only screen and (min-width: 770px) {
+
+    #pos-system-container{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        /* left:7em; */
+    }
+  
+    #pos-system-wrapper{
+        width: 85%;
+        /* left:7em; */
+        position: absolute;
+        right: 0%;
+        transform: translateX(-3%);
+    }
+
+    #pos-system-container{
+        /* width: 100%; */
+        /* height: 100vh; */
+        padding-bottom: 5em;
+        background-color: rgb(28, 28, 28);
+    }
+
+    .sku-input-container{
+        margin: 1em auto;
+    }
+
+
+    .listitems-container{
+        border: 3px solid rgb(21, 21, 21);
+    }
+}
+
+@media only screen and (min-width: 1480px) {
+    #pos-system-wrapper{
+        width: 90%;
+        transform: translateX(-2%);
+    }
+
+    .listitems-container{
+        border: 3px solid rgb(21, 21, 21);
+    }
+   
+}

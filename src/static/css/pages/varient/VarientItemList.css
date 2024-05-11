@@ -1,0 +1,39 @@
+
+.varient-list-conatiner {
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+    border: 1px solid rgb(205, 205, 205);
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* Link */
+.varient-lnk{
+    width: 100%;
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #303030;
+}
+
+.varient-info div {
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+
+
+.not-important-info p{
+    font-size: 10pt;
+}
+
+.varient-info div p:nth-child(odd){
+    font-weight: 700;
+}
+
+.product:hover{
+    background-color: #cacaca;
+}
