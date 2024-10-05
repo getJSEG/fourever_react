@@ -61,9 +61,10 @@ module.exports = {
       overlay:true,
     },
     compress: true,
-    open: true,
+    open: false,
     historyApiFallback: true,
-    liveReload: false,
+    liveReload: true,
+    hot: true,
     devMiddleware: {
       publicPath: '/'
     },

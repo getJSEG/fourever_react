@@ -1,4 +1,6 @@
+import Cookies from 'js-cookie';
 import axios from 'axios';
+import { getAccessCookie } from './auth';
 import {
     LOAD_LOCATION_INFO_SUCCESS,
     LOAD_LOCATION_INFO_FAIL,
@@ -9,34 +11,39 @@ import {
     HOST_URL,
  } from './types';
 
- import { checkAuthentication } from './CheckAuthentication'
+ const token = Cookies.get("access"); 
 
- export const load_location_info = () => async dispatch => {
-
-    const token = localStorage.getItem(TOKEN_LOCALSTORAGE_KEY);           
-    if(token === null){                                                                                //TESTING ONLY 
-        dispatch({ type: AUTHENTICATED_FAIL,   payload: false })
-        return;
-    }
-    const str_token = JSON.parse(token).access_token  
-
+ export const loadLocationInformation = () => async dispatch => {
+    
+    getAccessCookie(token);
+    
     const config = {
-        method: 'GET', 
+        method: 'get', 
         maxBodyLength: Infinity,
         url: `${HOST_URL}/api/location`,
         headers: { 
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + str_token
+            "Authorization": "Bearer " + token
         }
     }  
 
-    // try{
-    await axios.request(config)
+    axios.request(config)
     .then( response => {
         if (response.status >= 200 && response.status <= 299) { 
             dispatch({
                 type: LOAD_LOCATION_INFO_SUCCESS,
-                payload: response.data
+                payload: {
+                    address: response.data.data[0].address,
+                    city: response.data.data[0].city,
+                    country: response.data.data[0].country,
+                    department: response.data.data[0].department,
+                    email: response.data.data[0].email,
+                    type: response.data.data[0].location_type,
+                    status: response.data.data[0].status,
+                    tax: response.data.data[0].local_tax,
+                    isPreTaxed:response.data.data[0].pre_tax_items,
+                    isLoading: false,
+                }
             })
         } 
     })

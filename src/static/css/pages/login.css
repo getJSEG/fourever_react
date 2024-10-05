@@ -1,6 +1,9 @@
 /* this is for Mobile */
 .login-page-container{
     height: 100vh;
+    position: absolute;
+    background-color: #fff;
+    
 }
 
 .logo-container{
@@ -20,12 +23,13 @@
 .begin-session-title{
     font-weight: 600;
     font-size: x-large;
-    padding: -10%;
+    padding: 2%;
     margin: 0px;
 }
 
 .login-form-container{
     position: relative;
+    border-radius: 5px;
     /* top: 50%;
     transform: translateY(-50%); */
     width: 80%;
@@ -43,11 +47,18 @@
 
 .login-input-username, .login-input-password{
     width: 70%;
-    margin: 1em auto;
+    margin: 1em auto 2em auto;
     padding: 1em;
     border-radius: 5px;
     border:1px solid #dbd9d9;
+}
 
+.login-input-username:valid, .login-input-password:valid{
+    border:1px solid #dbd9d9;
+}
+
+.login-input-username:focus:invalid, .login-input-password:focus:invalid{
+    border: 2px solid red;
 }
 
 .btn-one{
@@ -64,8 +75,39 @@
     background-color: #e38fa4;
 }
 
+.error-message-container{
+    max-width: 100%;
+    height: 1em;
+}
 
-/* this is for desktop */
+.err-msg{
+    color: red;
+    display: inline-block;
+}
+
+.sign-in-label{
+    width: 75%;
+    height: 1em;
+    margin: auto;
+    text-align: left;
+}
+
+
+.error-message-container p.horizontal-shaking {
+    animation: horizontal-shaking 0.15s infinite;
+}
+
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+   }
+
+
+
+/* Desktop Style */
 @media only screen and (min-width: 770px) {
     .logo-container{
         position: relative;
@@ -77,8 +119,20 @@
     }
     
     .login-form-container{
-        width: 60%;
-        padding: 0;
+        width: 39%;
+        max-height: 40%;
+        padding: 2em 0;
+        -webkit-box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
+        -moz-box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
+        box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
+        border: 1px solid rgba(232, 232, 232, 0.678);
+    }
+
+    .login-page-container{
+        height: 100vh;
+        position: absolute;
+        background-color: #fff;
+        background-color: rgb(241, 240, 240);
     }
 
 }

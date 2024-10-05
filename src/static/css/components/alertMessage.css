@@ -1,0 +1,27 @@
+.alert{
+    width: 100%;
+    padding: .5em 0;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    position:fixed;
+    z-index: 300;
+    top: 0;
+    left: 0;
+}
+
+.alert-text{
+    font-size: 18pt;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+
+.alert.success{
+    background-color: rgba(76, 151, 1, 0.615);
+}
+
+.alert.error{
+    background-color: rgba(245, 2, 2, 0.575);
+}

@@ -1,0 +1,268 @@
+#pos-system-container{
+    display: flex;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    flex-direction: row;
+}  
+
+.pos-item-information-container{
+    background-color: #fff;
+    width: 35%;
+    box-shadow: 0px -3px 25px -3px rgba(0,0,0,0.1);
+}
+
+
+/* Table Container */
+.list-items-container{
+    height: 55%;
+    padding: 1em 0 0 0;
+    margin: auto;
+    overflow: scroll;
+    text-align: center;
+}
+
+.list-items-container ul {
+    width: 100%;
+    padding: 0;
+    margin: auto;
+}
+
+/* Payament information */
+.pos-payment-information{
+    width: 100%;
+    color: black;
+}
+
+/* DISCOUNT Button Style */
+.discount-container{
+    padding: .75em;
+    width: 85%;
+    border-radius: .5em;
+    position: relative;
+    margin: 1em auto;
+    background-color: #f2f2f2;
+}
+.discount-container, .discount-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.discount-container div p {
+    font-size: 13pt;
+    font-weight: 600;
+}
+.discount-button-container button {
+    border: none;
+    background-color: red;
+    color: #fff;
+    font-size: 8pt;
+    margin: .25em;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+/* This is for cancel and discount buttons */
+.discount-button-container button:active, .pos-cancel-button button:active{
+    background-color: rgb(183, 6, 6);
+}
+
+
+/* Line Items and discount */
+.item-and-discount-container{
+    padding: 1em;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.item-and-discount-labels{
+    display: flex;
+    flex-direction: column;
+}
+.item-and-discount-info{
+    display: inline;
+} 
+
+/* payment */
+.balance-due{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.include_tax{
+    display: block;
+}
+.dont-include-tax{ display: none; }
+
+
+/* total cost of all items style */
+.pos-price-information{
+    background-color: #f4f4f4;
+    width: 100%;
+    display:flex;
+}
+.pos-final-price-info label, .pos-final-price-info p{
+    font-size: 12pt;
+}
+.pos-final-price-info p{
+    text-align: right;
+}
+.pos-final-price-info label:last-child, .pos-final-price-info p:last-child{
+    font-size: 16pt;
+    font-weight: 700;
+}
+
+
+/* Point of sales BUTTON Style */
+.pos-button-container{
+    display: flex;
+    padding: 1em;
+    margin: auto;
+    justify-content: space-between;
+}
+.pos-cancel-button button{
+    background-color: red;
+}
+.pos-pay-button button{
+    background-color: #09cc16;
+}
+.pos-pay-button button:active{
+    background-color: #03a60e;
+}
+.pos-cancel-button button, .pos-pay-button  button{
+    color: #fff;
+    font-weight: 500;
+    font-size: 9pt;
+    border: none;
+    padding: .75em 1.75em;
+    margin: .2em;
+    border-radius: 10px;
+}
+
+@media only screen and (min-width: 770px) {
+    /* wrapper of the whole container */
+    #pos-system-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+    }
+    
+    #pos-system-product-search{
+        width:65%;
+        height: 100%;
+        padding: 0 0 0 7%;
+    }
+
+    /* Search Bar */
+    .sku-input-container{
+        text-align: center;
+        margin: auto;
+    }
+
+    .sku-input-container form input{
+        width: 50%;
+        position: relative;
+        padding: 1em 3em 1em 1em;
+        border: 1px solid #cecece;
+        border-radius: 50px;
+        background-color: #f5f5f5;
+        text-align: start;
+        vertical-align: text-top;
+        color: #828282;
+        font-weight: 600;
+    }
+
+    /* Product Selector Style */
+    .pos-category-selector{
+        padding: 1em;
+        width: 85%;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1em;
+        border-radius: 1em;
+        font-weight: 600;
+        background-color: #fff;
+    }
+    .pos-category-selector li {
+        padding: .5em .75em;
+        cursor: pointer;
+    }
+    .pos-category-selector li:hover {
+        background-color: rgb(199, 199, 199);
+        border-radius: .5em;
+    }
+    .product-cat-active {
+        background-color: black;
+        color: #fff;
+        border-radius: .5em;
+    }
+
+    .pos-product-list-selector-ul{
+        display: flex;
+        height: calc(100vh - 15em);
+        flex-direction: row;
+        padding: 1em 2em 1em 2em;
+        justify-content: flex-start;
+        flex-grow: 4;
+        flex-flow: row wrap;
+        overflow-x: scroll;
+        gap: 1em;
+        overflow: scroll;
+    }
+
+    .pos-product-list-item{
+        height: 13em;
+        width: 10em;
+        border-radius: 1em;
+        background-color: #fff;
+        display: inline-block;
+        overflow: scroll;
+        box-shadow: 0px -2px 15px -2px rgba(0,0,0,0.1);
+    }
+    .img-container{
+        height: 8em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .img-container img {
+        /* flex-shrink: 0; */
+        min-width: 100%;
+    }
+    .info-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: .5em;
+    }
+    .info-container p:nth-child(odd){
+        font-size: 13pt;
+        font-weight: 600;
+    }
+    .pos-itemsku{
+        font-size: 8pt;
+        font-weight: 400;
+    }
+
+    /* Wrapper of the payment ifnromation only */
+    .item-and-discount-labels{
+        display: flex;
+        flex-direction: column;
+    }
+    .item-and-discount-info{
+        display: inline-block;
+    }
+    #pos-system-container{
+        width: 100%;
+        height: 100vh;
+        position: relative;
+    }
+    .sku-input-container{
+        margin: 1em auto;
+    }
+}

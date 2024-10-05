@@ -12,9 +12,10 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    isAuthenticated: null,
-    isLoading: true,
+    isAuthenticated: false,
+    isLoading: false,
     fieldErr: "",
+    error: false
 };
 
 export default function(state = initialState, action) {
@@ -22,40 +23,53 @@ export default function(state = initialState, action) {
 
     switch(type) {
         case AUTHENTICATED_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: payload.isAuthenticated,
+                isLoading: payload.isLoading,
+                fieldErr:payload.fieldErr
+            }
         case AUTHENTICATED_FAIL:
             return {
                 ...state,
                 isAuthenticated: payload.isAuthenticated,
-                isLoading: payload.isLoading
-            }
-        case REGISTER_SUCCESS:
-            return {
-                ...state,
-                isAuthenticated: false,
-                isLoading: true,
+                isLoading: payload.isLoading,
+                fieldErr: payload.fieldErr,
+                error: payload.error
             }
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true,
-                fieldErr:"",
+                isAuthenticated: payload.isAuthenticated,
+                isLoading: payload.isAuthenticated,
+                fieldErr:""
+            }
+        case LOGIN_FAIL:
+            return {
+                ...state,
+                isAuthenticated: payload.isAuthenticated,
+                isLoading: payload.isAuthenticated,
+                fieldErr: payload.fieldErr,
+                error: payload.error
             }
         case LOGOUT_SUCCESS:
+        case LOGOUT_FAIL:
+        return {
+            ...state,
+            loading: false
+        }
+        case REGISTER_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: payload.isAuthenticated,
+                isLoading: payload.isAuthenticated,
+                fieldErr:""
+            }
+        case REGISTER_FAIL:
         case DELETE_USER_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: false
-            }
-        case REGISTER_FAIL:
-        case LOGIN_FAIL:
-            return {
-                ...state,
-                fieldErr: payload
-            }
-        case LOGOUT_FAIL:
-            return {
-                ...state,
-                loading: false
             }
         case DELETE_USER_FAIL:
             return state

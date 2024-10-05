@@ -5,21 +5,38 @@ import Layout from "./Layout";
 
 // request 
 import { checkAuthenticated } from '../actions/auth';
-import { load_user } from '../actions/profile';
-import { load_location_info } from "../actions/Location";
+import { tokenRefresh } from "../actions/auth";
+import { loadUserProfile } from '../actions/profile';
+import { loadLocationInformation } from "../actions/Location";
 import { connect } from "react-redux";
 
 
 //loading page
 import Loading from "../components/Loading";
 
-const PrivateRoute = ({checkAuthenticated, load_user, load_location_info, isAuthenticated, isLoading}) => {
+const PrivateRoute = ({checkAuthenticated, tokenRefresh, loadUserProfile, loadLocationInformation, isAuthenticated, isLoading}) => {
     
     useEffect(() => {
         checkAuthenticated();
-        load_user();
-        load_location_info();
+        loadUserProfile();
+        loadLocationInformation();
     }, []);
+
+    useEffect( () => {
+
+        let interval = setInterval( ()=> {
+            // checkAuthenticated()
+            tokenRefresh();
+            // if(isAuthenticated){
+            //     RefresnToken()
+            // }
+        }, 50000)
+
+        return () => clearInterval(interval)
+    }, []);
+
+
+
     
     if (isLoading){
         return (<Loading />)
@@ -33,4 +50,4 @@ const mapStateToProps = state => ({
     isLoading: state.auth.isLoading
 });
 
-export default connect(mapStateToProps,  { checkAuthenticated, load_user, load_location_info})(PrivateRoute);
+export default connect(mapStateToProps,  { checkAuthenticated, tokenRefresh, loadUserProfile, loadLocationInformation})(PrivateRoute);

@@ -11,8 +11,9 @@ import {
 
  const initialState = {
     varients: null,
-    isLoading: true,
-    varientCreated: false
+    isVarientLoading: true,
+    message: '',
+    isCreationSuccess: false
  }
 
 
@@ -23,32 +24,43 @@ export default function(state = initialState, action) {
         case CREATE_VARIENT_SUCCESS:
             return {
                 ...state,
-                varientCreated: payload,
-                isLoading: false
+                isVarientLoading: payload.isVarientLoading,
+                message: payload.message,
+                isCreationSuccess: payload.isCreationSuccess
             }
         case CREATE_VARIENT_FAIL:
             return {
                 ...state,
-                varientCreated: payload,
-                isLoading: true
+                isVarientLoading: payload.isVarientLoading,
+                message: payload.message,
+                isCreationSuccess: payload.isCreationSuccess
             }
         case LOAD_VARIENTS_SUCCESS:
             return {
                 ...state,
                 varients: payload.data,
-                isLoading: false
+                isVarientLoading: payload.isVarientLoading,
             }
         case LOAD_VARIENTS_FAIL:
             return {
                 ...state,
                 varients: "",
-                isLoading: true
+                isVarientLoading: payload.isVarientLoading
             }
         case UPDATE_VARIENT_SUCCESS:
         case UPDATE_VARIENT_FAIL:
         case DELETE_VARIENT_SUCCESS:
         case DELETE_VARIENT_FAIL:
-        default:
+        case "DEFAULT":
+            return {
+                ...state,
+                varients: null,
+                isVarientLoading: true,
+                message: '',
+                isCreationSuccess: false
+            }
+        default: 
             return state
+
     }
 }

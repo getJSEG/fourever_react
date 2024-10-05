@@ -1,0 +1,157 @@
+.inventory-list{
+    /* width:100%; */
+    min-height: 34em;
+    color:#8f9199;
+    display: flex;
+    height: 30em;
+    padding: 0 2em;
+    flex-direction: column;
+    justify-content:flex-start;
+    overflow: scroll;
+}
+
+.inventory-list .list-item {
+    background-color: #ececec;
+    width: 100%;
+    /* padding: .5em .5em; */
+    border-radius: 1em;
+    margin: .5em auto;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.inventory-list .list-item  .clickable-position {
+    width: 100%;
+    padding: .5em .5em;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+.inventory-list .list-item .image-container {
+    max-width:  5em;
+    max-height: 6em;
+    border-radius: 1em;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.inventory-list .list-item .image-container .image{
+    object-fit: cover;
+    width: 100%;
+}
+
+.inventory-information{
+    text-align: left;
+    height: 90%;
+    margin: auto .25em;
+    padding: 0 1em;
+}
+
+.inventory-information .b-title{
+    overflow: hidden;
+}
+
+.inventory-information .b-title .title{
+    font-size: 15pt;
+    overflow: hidden;
+    text-transform:capitalize;
+    text-overflow: ellipsis;
+}
+
+
+.secondary-information .varients{
+    background-color: #f154a0;
+    color: #fff;
+    width: 90%;
+    text-align: center;
+    display: block;
+    font-size: 9pt;
+    font-weight: 500;
+    padding: .5em .5em;
+    border-radius: 5px;
+}
+
+.secondary-information .units{
+    padding: 0;
+    width: 100%;
+    display: block;
+    font-size: 9pt;
+}
+
+.inventory-prices{
+    display: none;
+}
+
+.list-item .inventory-controls{
+    margin: 0 1em;
+
+}
+.inventory-controls .inventory-item-control{
+    border: 1px solid #c7c8cc;
+    background-color: #ececec;
+    text-align: center;
+    border-radius: 10px;
+    width: 2.5em;
+    height: 2.5em;
+    z-index: 100;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 770px) {
+
+    .inventory-list .list-item .image-container {
+        max-width: 8em;
+    }
+    
+    .inventory-information{
+        width: 50%;
+    }
+    
+    .inventory-information .b-title{
+        padding: .2em;
+        height: 50%;
+    }
+    .inventory-information .b-title .title{
+        font-size: 19pt;
+    }
+
+    .inventory-prices{
+        height: 50%;
+        width: 30%;
+        display: flex;
+        border-left: 1px solid #8f9199;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .inventory-prices .retail-prices, .inventory-prices .inventory-cost {
+        text-align: left;
+    }
+    
+    .retail-prices .title, .inventory-cost .title{
+        font-weight: 600;
+        font-size: 10pt;
+        height: 50%;
+        text-transform: uppercase;
+    }
+
+    .secondary-information .varients{
+        width: 100%;
+        display: inline;
+    }
+
+    .secondary-information .units{
+        padding: 0 1em;
+        display: inline;
+        font-size: 12pt;
+    }
+    
+    .secondary-information .varients{
+        width: 50%;
+    }
+}

@@ -1,91 +1,42 @@
-/*  product info and pricing */
-.product-info-container{
+.chart-container{
     display: flex;
-    flex-direction: row;
-    /* align-content: flex-start; */
-    justify-content: center;
-    flex-grow: 3;
+    flex-direction: column;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
-    gap: .5em;
-    padding: 1em;
+    /* gap: 2em; */
+    row-gap: 1em;
+    margin-top: 1.5em;
 }
 
-.total-products, .total-profit, .products-cost{
-    position: relative;
-    padding: 1em;
-    flex-grow: 1;
-    height: 3em;
-    border-radius: 5px;
-    background-color: #ffb1c5;
-    color: #262626;
-}
-
-.total-products p, .total-profit p, .products-cost p{
-    padding-bottom: .25em;
-    line-height: 1em;
-}
-
-.total-products h5, .total-profit h5, .products-cost h5{
-    color: #303030;
-    margin: auto;
-    bottom: 0;
-    font-size: 12pt;
-}
-
-
-/* TOP ITEM SOLD STYLE */
-
-.Top-selling-items{
-    padding: 1em;
-    background-color: rgb(249, 246, 246);
-}
-
-.Top-selling-items h3{
-    font-weight: 600;
-    padding-bottom: 1em;
-    color: #454545;
-}
-
-.top-selling-item-list-container{
+.chart-info {
     display: flex;
     flex-direction: row;
-    gap: 1em;
-}
-
-.item{
+    justify-content: space-between;
     padding: 1em;
-    border-radius: 10px;
+}
+
+.graph-selector-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.graph-selector-info p {
+    padding-right: 1em;
+}
+
+/*  Chart */
+.chart-wrapper{
+    padding: .5em 1em .5em 1em;
+    border-radius: 20px;
     background-color: #fff;
-}
-
-.item:hover{
-    background-color: #cacaca;
-}
-
-.top-sold-item-img{
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-}
-
-.top-sold-item-img img{
-    width: 150px;
-}
-
-.tsi-quaitity{
-    font-weight: 700;
-    font-size: 12pt;
+    border: 2px solid #f5f5f5;
+    box-shadow: 0px -1px 15px -12px rgba(0,0,0,0.69);
 }
 
 
 
-/* Sales Style */
-.sales{
-    /* border: 1px solid green; */
-}
 
 
-/* Desktop Style */
 @media only screen and (min-width: 770px) {
 
     #dashboard-container{
@@ -95,4 +46,12 @@
         overflow: hidden;
     }
 
+    .chart-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 2em;
+        margin-top: 1.5em;
+    }
+    
 }

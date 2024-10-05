@@ -70,45 +70,65 @@ li{
 
 #menu-icon{ width: 1.5em; height: 1.3em; }
 
+.li-container p {
+    display: none;
+}
+
 @media only screen and (min-width: 770px) {
     #navigation{
-        z-index: 200;
-        background-color: #ffafc3;
+        z-index: 900;
+        background-color: #000000;
         z-index: 1;
+        padding-top: 2em;
         position:fixed;
         display: inline-block;
         box-shadow: -8px 0 12px #333;
         top: 0;
         left: 0;
-        width: 6em;
+        width: 4em;
         height: 100vh;
     }
+    .navigation-ul-list{
+        padding: 0;
+    }
 
+    .nav-links{
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5em 0;
+    }
+    
     .li-container{
-        width: 5em;
-        height: 5em;
-        padding: 1em;
+        padding: 0;
+        display: block;
+        margin: 2em auto;
         justify-content: center;
         text-align: center;
     }
-
     .nav-i-c-a-c{
         stroke:#fff;
         color: #fff;
     }
 
-    .active .nav-i-c-a-c{
-        stroke: #262626;
-        color: #262626;
-    }
-
-
     .barcode-icon{
         fill:#fff;
     }
 
+    /* WHEN ACTIVE ONLY ON DESKTOP */
+    .active .nav-i-c-a-c{
+        stroke: #000000;
+        color: #000000;
+    }
+    .active{
+        text-align: center;
+        vertical-align: middle;
+        background-color: #fff;
+        border-radius: 50px 0px 0px 50px;
+    }
     .active .barcode-icon{
-        fill: #262626;
+        fill:#000000;
     }
     
 

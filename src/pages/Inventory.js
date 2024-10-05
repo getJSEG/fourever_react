@@ -3,103 +3,156 @@ import { Link, NavLink } from "react-router-dom";
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
 
-import { load_products } from '../actions/products';
-
-// TODo: Dispaly the number of varients
-// TODO: Display the toal value of products
+//List
+import { load_products } from '../actions/inventory/products';
 
 // component
-import Product from "../components/InventoryProduct";
-import CondenseForm from "../components/CondenseForm";
+// import ProductListItem from "../../components/inventory/ProductTableItem";
+import ProductTable from "../components/inventory/productTable";
+import FormCondense from "../components/inventory/FormCondense";
+import TripleBoxInfo from "../components/common/TripleBoxInfo";
 
-//Styles
-import "../static/css/pages/inventory.css"
+//Styles formain page and all components 
+import "../static/css/pages/inventory.css";
+import "../static/css/components/common/shortForm.css"
 
-const Inventory  = ({ load_products, products, isLoading }) => {
-    
-    let [productData, setProductData] = useState([])
-    const [totalProductValue, settotalProductValue ] = useState(0)
-    const [totalProductItems, setTotalProductItems] = useState(0)
-    const [totalProductCategories, settotalProductCategories] = useState(0)
+
+const Inventory  = ({ load_products, isLoading, totalVarients, totalInvestedValue, count}) => {
+
+    const [pages, setPages] = useState([])
+    const [pageCount, setpageCount] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [formData, setFormData] = useState({ productSearch: ''});
+    const {productSearch} = formData;
     const [popup, setpopup] = useState(false)
     const closePopupForm= e => { setpopup(false) }
     const openPopupForm = e => { setpopup(true) }
 
+    useEffect(()=> {  load_products(currentPage);  }, [])
 
-    const GettotalProductValue = (price) => {
-
+    const HandlePageClick = (e) => {
+        setCurrentPage(e.target.value)
+        load_products(e.target.value);
     }
 
-    const getTotalProductItems = () => {
-        settotalProductCategories(productData.length);
+    const handleNextPage = () => {
+        if(currentPage < pageCount){
+            setCurrentPage(prev => prev + 1)
+        }
     }
 
-    useEffect(()=> { load_products(); }, [])
+    const handlePrevPage = () => {
+        if(currentPage > 1){
+            setCurrentPage(prev => prev - 1)
+        }
+    }
 
-    useEffect(()=> {
+    const onChange = e => setFormData({...formData, [e.target.name]: e.target.value })
+
+    const handleSearchBar  = (event) => {
+        event.preventDefault();
+        console.log("this input")
+
+        console.log(productSearch )
+        // setFormData({productSearch:''})
+    }
+
+    useEffect(()=> {  
         if(!isLoading){
-            setProductData([...products]);
+            setPages([])
+            setpageCount(Math.ceil(count/12))
+            
+            for(let i = 0 ; i < pageCount; i++ ){                                             
+                setPages(prev => [...prev, i+1])
+            } 
         }
-    }, [isLoading])
+    }, [count, pageCount]) 
 
-    useEffect(()=> {
-        if(!isLoading && productData !== null){
-            getTotalProductItems();
-        }
-        
-    }, [productData])
+    // TODO: IF THEIRS MORE THAT 4 PAGES ADD ... AND THEN IF PAGE IS SELECTED annd the next 4
+    useEffect(()=> {  
+        load_products(currentPage);
+    }, [currentPage]) 
 
     return(
-      <div id="inventory-page-container">
-        <h2> Productos </h2>
+      <div className="products main-container">
+            <h2> Inventario </h2>
 
-        <div className="product-info-container">
-            <div className="abre-prodict-info">
-                <p> Numero de Caregorias: </p>
-                <h5> {totalProductCategories} </h5>
-            </div>
+            <TripleBoxInfo
+                titleOne={'Productos'} 
+                titleTwo={'varidades'} 
+                titleTree={'Total Invertido'} 
+                infoOne={!isLoading ?  count : 0} 
+                infoTwo={ !isLoading ? totalVarients : 0}
+                infoThree={ !isLoading ? '$' + parseFloat(totalInvestedValue).toFixed(2) : '$' + 0.00}
+            >
+            </TripleBoxInfo>
 
-            <div className="abre-prodict-info"> 
-                <p>Unidades Total: </p>
-                <h5> 140 </h5>
-            </div>
-
-            <div className="abre-prodict-info">
-                <p> Valor de la Tienda: </p>
-                <h5> $600.00 </h5>
-            </div>
-        </div>
-
-        {/* products */}
-        <div className="product-container">
+            {/* products */}
             <div className="product-list-container">
 
-                {
-                    !isLoading ? productData?.map( (item) => { 
-                        return <Product key={item.id} id={item.id} name={item.name} brand={item.brand} productAcro={item.product_acronym} /> 
-                    }) : 
-                    <h1> LOADING </h1>
-                }
+                <div className="product-search-bar-container">
 
-                { popup ? <CondenseForm closePopupForm={closePopupForm}/> : null}
+                    <div>
+                        <button onClick={openPopupForm} className="create-product-button">Crear Producto </button>
+                    </div>
+                    <form onSubmit={e => handleSearchBar(e)}>
+                        <input className="product-search-bar"
+                                name="productSearch"
+                                type="text" 
+                                autoComplete="off"
+                                onChange={e => onChange(e)}
+                                value={productSearch}
+                                placeholder="Buscar"
+                        />
+                    </form>
+                </div>
+
                 
+                <ProductTable> </ProductTable>
 
-                <div onClick={openPopupForm} className="create-product-button-m"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" className="bi bi-plus" viewBox="-3 -3 20 20">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                </svg>
+
+                <div className="page-selector-container">
+                    <button onClick={handlePrevPage} className="page-prev"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                    </button>
+
+                    <ul className="product-page-selector">
+                        {   
+                            pages.map(  item => { 
+
+                                return <li onClick={HandlePageClick}  
+                                           className={currentPage == item ? 'product-page-selector-active' : ''}
+                                           key={item} value={item}> {item} </li>
+                            })
+                        }
+                    </ul>
+                    
+                    <button onClick={handleNextPage} className="page-next"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </button>
+                </div>
+
+                { popup ? <FormCondense closePopupForm={closePopupForm}/> : null}
             </div>
-            </div>
-        </div>
-        
+
+
+
       </div>  
     )
 }
 
 
 const mapStateToProps = state => ({
-    products: state.products.products,
     isLoading: state.products.isLoading,
+    next: state.products.next,
+    prev: state.products.prev,
+    totalVarients: state.products.totalVarients,
+    totalInvestedValue: state.products.totalInvestedValue,
+    count: state.products.count,
 });
 
 
