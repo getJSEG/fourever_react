@@ -1,0 +1,27 @@
+
+.cc-payment-wrapper{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: auto;
+    padding: .45em 0;
+    width: 65%;
+}
+
+.pymt-label{
+    text-align: left;
+    color: var(--primary-color);
+}
+
+.pymt-input{
+    border-radius: 5px;
+    text-align: left;
+    font-size: 12pt;
+    padding: .5em .25em;
+    border: 1px solid var(--third-color);
+
+}
+
+.pymtn-amount{
+    color: var(--good-btn);
+}

@@ -1,16 +1,17 @@
 /* this is for Mobile */
 .login-page-container{
     height: 100vh;
+    width: 100%;
+    margin: auto;
     position: absolute;
     background-color: #fff;
-    
 }
 
 .logo-container{
     position: relative;
     width: 65%;
-    display: flexbox;
-    margin: 5em auto 0em auto;
+    display: flex;
+    margin: 0em auto;
     padding-bottom:0;
     text-align: center;
 }
@@ -28,8 +29,8 @@
 }
 
 .login-form-container{
-    position: relative;
-    border-radius: 5px;
+    /* position: relative; */
+    border-radius: 15px;
     /* top: 50%;
     transform: translateY(-50%); */
     width: 80%;
@@ -67,12 +68,13 @@
     padding: 1em;
     border-radius: 10px;
     border: none;
-    background-color: #ffb1c5;
-    color: #262626;
+    position: relative;
+    background-color: rgb(58, 58, 58);
+    color: #fff;
 }
 
 .btn-one:focus{
-    background-color: #e38fa4;
+    background-color: rgb(30, 30, 30);;
 }
 
 .error-message-container{
@@ -108,20 +110,19 @@
 
 
 /* Desktop Style */
-@media only screen and (min-width: 770px) {
+@media screen and (min-width: 780px) {
     .logo-container{
         position: relative;
         width: 35%;
-        display: flexbox;
+        display: flex;
         margin: 3em auto 0em auto;
         padding-bottom:0;
         text-align: center;
     }
     
     .login-form-container{
-        width: 39%;
-        max-height: 40%;
-        padding: 2em 0;
+        width: 50%;
+        padding: 1em 0;
         -webkit-box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
         -moz-box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
         box-shadow: 2px 2px 15px 6px rgba(0,0,0,0.06);
@@ -129,10 +130,14 @@
     }
 
     .login-page-container{
-        height: 100vh;
-        position: absolute;
+        /* height: 100vh;
+        position: absolute; */
         background-color: #fff;
         background-color: rgb(241, 240, 240);
     }
 
+}
+
+@media screen and (min-width: 1300px) {
+    .login-form-container{ width: 40%; }
 }

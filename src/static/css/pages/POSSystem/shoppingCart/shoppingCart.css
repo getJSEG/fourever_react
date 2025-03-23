@@ -1,0 +1,15 @@
+@import url("./LineItem.css");
+
+.list-items-container{
+    height: 55%;
+    padding: 1em 0 0 0;
+    margin: auto;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.list-items-container ul {
+    width: 100%;
+    padding: 0;
+    margin: auto;
+}

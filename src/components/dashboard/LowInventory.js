@@ -1,50 +1,84 @@
 import React, { useState, useEffect }from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { GetLowInventory } from "../../actions/dashboard/Dashboard";
+import { useGetStockLevelQuery } from "../../features/dashboard/dashboardApiSlice";
 
-// Styles Here
-
+// Compoenents
+import Pagination from "../common/Pagination";
+import Loading from "../common/Loading";
+// TODO: Change the back end to retrive the varaint that is low stock
 /* Low Inventory */
-const LowInventory  = ({ GetLowInventory, lowStockData, isLoading }) => {
+const LowInventory  = () => {
+
+    const {
+        data: 
+        stockLevelData,
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    } = useGetStockLevelQuery();
+
+    const navigate = useNavigate();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(stockLevelData?.length);
+    const [itemperPage, setItemsPerPafe] = useState(2);
+
+    // // Subset the items mapping
+    let subset =  stockLevelData?.slice((currentPage*itemperPage)-itemperPage, currentPage*itemperPage);
+
+    const getCurrentPage = (childCurrentPage) => { setCurrentPage(childCurrentPage) }
+
 
     useEffect( () => {
-        GetLowInventory();
-    },[])
+        setTotalItems(stockLevelData?.length)
+    }, [stockLevelData]);
 
-    console.log(lowStockData == null)
+    const handleClick = (productId) => {
+        navigate(`/product/${productId}`);
+    }
 
-    return(
-        <div className="low-inventory-container">
-            <h3> Inventario Bajo </h3>
+    let content = isLoading ? <Loading /> : ( 
+    <section className="background-container low-inventory-container">
 
-            <div className="low-inventory-list">
+        <h3 className="low-int-title"> Inventario Bajo </h3>
 
-            {
+        <div className="low-inventory-list">
+        {
+            subset.length !== 0 ?  
+                (
+                subset?.map( (item) =>  
+                    (<div key={item?.sku} className="low-inventory-item" onClick={ (e) => { handleClick(item?.id) } }>
+                        <div className="low-inventory-img">
+                            <img src={item?.image?.link}  alt={item?.image?.title}/>
+                        </div>
+                        <div className="low-inventory-info">
+                            <div className="prod-name"> 
+                                <p className="prod-info"> { item?.name} </p>
+                                <span className="Divider"> </span>
+                                <p className="prod-info"> { item?.brand }</p>
+                            </div>
+                            <p className="prod-brand prod-info"> Unidades Restantes: { item?.units } </p>
+                            <p className="prod-brand prod-info"> color: { item?.color } </p>
+                        </div>
+                    </div>))
+                ) 
+             : <section></section>
 
-            //  !isLoading && lowStockData.length !== 0 ?  
-            //                         (lowStockData.map( (item) =>  (<div key={item.product.id} className="low-inventory-item">
-            //                                                             <div className="low-inventory-img">
-            //                                                                 <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSa5Nmr12H-DeF07o0-YwYtNRatGfHIzA1aV0FMmLOTBWPwQlWIpdzLcWvf_-kwrYBCdT1wMaL1OFTxeq0JhMFNerlRwvp-aawqmA2iCL6mmcUub82JOLLgoMMo" />
-            //                                                             </div>
-            //                                                             <div className="low-inventory-name">
-            //                                                                 <p> { item.product.name} </p>
-            //                                                                 <span> Inventario Vajo </span>
-            //                                                             </div>
-            //                                                         </div>) ) ) 
-            //      : null
-
-            }   
-            </div>
+        }   
         </div>
-    )
+
+        <Pagination
+            getCurrentPage={getCurrentPage} 
+            totalItems = {totalItems}
+            itemPerPage={itemperPage}
+        />
+    </section> )
+
+    return content
+
 }
 
-
-const mapStateToProps = state => ({
-    lowStockData: state.lowInventory.lowStockData,
-    isLoading: state.lowInventory.isLoading,
-});
-
-export default connect(mapStateToProps, {GetLowInventory})(LowInventory);
+export default LowInventory;

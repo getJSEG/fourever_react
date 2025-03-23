@@ -1,0 +1,115 @@
+.receipt-containers{
+    width: 40%;
+    margin: 2em auto;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.payment-info{
+    display: flex;
+    justify-content: center;
+    flex-direction:row;
+    gap: 4em;
+}
+.icon-container{
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.secondary-title{
+    font-size: 12pt;
+}
+
+.p-check-icon-outer{
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    margin: 0 auto;
+    /* padding: 10px; */
+    position: relative;
+}
+.success {  background-color: rgba(31, 153, 10, 0.537); }
+.fail { background-color: #bc0117d8; }
+
+.success-inner{ background-color: rgba(24, 142, 3, 0.872); }
+.fail-inner { background-color: #940112;}
+
+.p-check-icon-inner{
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.p-check-icon{
+    fill: #fff;
+    color: #fff;
+}
+.trans-procces{
+    padding-top: 1em;
+    font-size: 18pt;
+}
+.aformation, .total-payment-info{
+    text-align: left;
+    width: 100%;
+}
+.detail, .total-amount {
+    text-align: right;
+    width: 100%;
+}
+.total-payment-container{
+    display: flex;
+    justify-content: center;
+    flex-direction:row;
+    gap: 6.5em;
+    padding-top: 1em;
+}
+.aformation, .detail{
+    padding: 1em 0 1em 0;
+}
+
+.p-detail-info, .p-detail{
+    padding: .5em 0 .5em 0;
+}
+
+.s-suc-infor{
+    display: inline-block;
+    display: flex;
+    flex-direction:row-reverse;
+}
+/* .sm-message-cont{
+    width: 50%;
+} */
+
+.sm-icon-container{
+    width: 20%;
+    text-align: right;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: right;
+}
+.p-check-icon-outer-sm{
+    /* background-color: rgba(24, 142, 3, 0.872); */
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.divider-container{
+    border: 1px dashed #f5f5f5;;
+}
+
+.back-h-r-btn{
+    background-color: rgb(216, 34, 155);
+    color: #fff;
+    text-decoration: none;
+}

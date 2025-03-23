@@ -26,6 +26,9 @@
 .button-three{
     background-color: black;
     border: none;
+    text-decoration: none;
+    font-size: 10pt;
+    font-weight: 500;
     padding: .25em .75em;
     border-radius: 5px;
     margin-right: .5em;
@@ -57,4 +60,23 @@
 button:disabled,
 button[disabled]{
     background-color: darkgrey;
+}
+
+
+
+
+
+.btn-4{
+    background-color: #f4f4f4;
+    color: #a9acb5;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+}
+.btn-4:disabled{
+    background-color: #dadada;
+    color: #ffffff;
+}
+.btn-4:active{
+    background-color: #bdbdbd;
+    color: #ffffff;
 }

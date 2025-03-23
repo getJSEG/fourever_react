@@ -1,7 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 const htmlWebpackPlugin = require('html-webpack-plugin')
-require('babel-register')
+// require('babel-register')
+// const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
@@ -43,15 +44,13 @@ module.exports = {
     minimize: true,
   },
   plugins: [
-    new webpack.DefinePlugin({
-      process: {env: {}}
-    }),
     new htmlWebpackPlugin({
       template: './public/index.html', //source,
       title: "Inventario",
       inject: true
 
-    })
+    }),
+    new Dotenv(),
   ],
   devServer: {
     static: {

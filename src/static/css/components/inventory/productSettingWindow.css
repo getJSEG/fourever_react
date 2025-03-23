@@ -1,0 +1,50 @@
+.product-setting{
+    position:absolute;
+    /* top: 35px; */
+    right: 100px;
+    background: #fff;
+    border: 1px solid #f5f5f5;
+    border-radius: 10px;
+    padding: .5em 0;
+    box-shadow: 0px -1px 15px -12px rgba(0,0,0,0.69);
+    display: flex;
+    z-index: 1800;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.delt-btn-container{
+    padding: .25em 0;
+}
+
+.delt-button{
+    background: transparent;
+    width: 100%;
+    padding: .5em 2.25em;
+    border: none;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    color: #8F9199;
+}
+
+.delt-button:hover{
+    background-color: #dcdcdc;
+}
+.btn-icn-cntainer{
+    position: relative;
+}
+
+.bi-trash4{
+    position: relative;
+    align-items: center;
+    top: 4px;
+}
+
+.delt-button-wrd{
+    font-size: 12pt;
+}
+
+

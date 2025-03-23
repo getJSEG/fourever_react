@@ -1,0 +1,48 @@
+.srch-bar-wrapper{
+    font-weight: 600;
+    border-radius: 100px;
+}
+
+
+.srch-bar-container{
+    display: flex;
+    border-radius: 20px;
+    height: 2em;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: .25em 1em;
+    background-color: #f4f4f4;
+    border: 1px solid #d0d0d0;
+}
+
+.srch-inpt{
+    border: none;
+    padding: .5em 2em .5em .25em;
+    margin-left: 1em;
+    height: 1.5em;
+    width: 70%;
+    background: none;
+    resize: none; 
+    overflow: auto;
+}
+
+.srch-inpt:focus-visible{
+    outline: none;
+}
+.srch-buttons-con{
+    background: none;
+}
+
+.empty-srch-x{
+    display: block;
+    width: 2em;
+}
+.bi-search, .invtr-buttons{
+    color: rgb(130, 130, 130);
+}
+.clear-x{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: rgb(130, 130, 130);
+}

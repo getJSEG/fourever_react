@@ -7,19 +7,19 @@ const Dashboard  = ({ titleOne, titleTwo, titleTree, infoOne, infoTwo, infoThree
       <div id="triple-box-info">
         <div className="triple-box-info-container">
 
-            <div className="box-info box-one">
-                <p> {titleOne} </p>
-                <h5> {infoOne} </h5>
+            <div className="background-container box-info box-one">
+                <p className="lit-gy-text-color"> {titleOne || ''} </p>
+                <h5 className="drk-gy-text-color"> {infoOne || 0} </h5>
             </div>
 
-            <div className="box-info boc-two"> 
-                <p> {titleTwo} </p>
-                <h5> {infoTwo} </h5>
+            <div className="background-container box-info boc-two"> 
+                <p className="lit-gy-text-color"> {titleTwo || ''} </p>
+                <h5 className="drk-gy-text-color"> {infoTwo || 0} </h5>
             </div>
 
-            <div className="box-info box-three">
-                <p> {titleTree} </p>
-                <h5> {infoThree} </h5>
+            <div className="background-container box-info box-three">
+                <p className="lit-gy-text-color"> {titleTree || ''} </p>
+                <h5 className="drk-gy-text-color"> {infoThree || 0} </h5>
             </div>
         </div>
       </div>  

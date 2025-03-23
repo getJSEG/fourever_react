@@ -1,13 +1,15 @@
+@import url("../components/dashboard/transactionHistory.css");
+@import url("../components/dashboard/lowInventory.css");
+
+
 .chart-container{
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     flex-wrap: wrap;
-    /* gap: 2em; */
-    row-gap: 1em;
+    margin: auto;
     margin-top: 1.5em;
-}
 
+}
 .chart-info {
     display: flex;
     flex-direction: row;
@@ -23,19 +25,15 @@
 .graph-selector-info p {
     padding-right: 1em;
 }
-
-/*  Chart */
 .chart-wrapper{
-    padding: .5em 1em .5em 1em;
-    border-radius: 20px;
-    background-color: #fff;
-    border: 2px solid #f5f5f5;
-    box-shadow: 0px -1px 15px -12px rgba(0,0,0,0.69);
+    width: 350px;
 }
 
-
-
-
+@media only screen and (min-width: 390px) {
+    .chart-wrapper{
+        width: 325px;
+    }
+}
 
 @media only screen and (min-width: 770px) {
 
@@ -50,8 +48,11 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        gap: 2em;
         margin-top: 1.5em;
+    }   
+
+    .chart-wrapper{
+        width: 500px;
     }
-    
+
 }

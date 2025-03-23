@@ -6,6 +6,7 @@
     margin:auto;
     position:absolute;
     text-align: center;
+    /* z-index: 2; */
     /* top: 45%; */
     /* transform: translateY(-60%); */
 }

@@ -1,27 +1,59 @@
-.alert{
-    width: 100%;
-    padding: .5em 0;
-    color: #fff;
-    text-align: center;
-    justify-content: center;
-    position:fixed;
-    z-index: 300;
-    top: 0;
-    left: 0;
+.banner{
+    position: fixed;
+    display: block;
+    width: 90%;
+    height: 4em;
+    margin: 3em auto;
+    z-index: 100000;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
+.alert-msg {
+    width: 50%;
+    display: flex;
+    margin: auto;
+    padding: 1em 0 1em 1em;
+    border-radius: 0.75rem;
+    color: #fff;
+}
+
+.msg-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.alert-msg-icon{
+    padding: 0 .5em;
+}
+
+
+/* Error Only */
+.error-alert-msg{
+    width: 100%;
+    background: #bc0117d8;
+}
+
+
+
+.success-alert-msg{
+    width: 100%;
+    background: #01ae3de2;
+}
+
+
+
 .alert-text{
-    font-size: 18pt;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-size: 12pt;
+    font-weight: 400;
     text-transform: capitalize;
 }
 
 
-.alert.success{
+/* .alert.success{
     background-color: rgba(76, 151, 1, 0.615);
 }
 
 .alert.error{
     background-color: rgba(245, 2, 2, 0.575);
-}
+} */

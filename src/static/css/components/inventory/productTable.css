@@ -1,19 +1,16 @@
 .inventory-list{
-    /* width:100%; */
     min-height: 34em;
     color:#8f9199;
     display: flex;
-    height: 30em;
     padding: 0 2em;
     flex-direction: column;
     justify-content:flex-start;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .inventory-list .list-item {
     background-color: #ececec;
     width: 100%;
-    /* padding: .5em .5em; */
     border-radius: 1em;
     margin: .5em auto;
     justify-content:space-between;
@@ -32,17 +29,22 @@
 }
 
 .inventory-list .list-item .image-container {
-    max-width:  5em;
-    max-height: 6em;
-    border-radius: 1em;
-    justify-content: center;
+    max-width:  7em;
+    max-height: 7em;
+    border-radius: 100px;
     align-items: center;
     overflow: hidden;
     background-color: #fff;
 }
 
+.has-image{
+    border: 3px solid pink;
+}
+
 .inventory-list .list-item .image-container .image{
-    object-fit: cover;
+    /* object-fit: cover; */
+    text-align: center;
+    margin: auto;
     width: 100%;
 }
 
@@ -105,9 +107,9 @@
 
 @media only screen and (min-width: 770px) {
 
-    .inventory-list .list-item .image-container {
-        max-width: 8em;
-    }
+    /* .inventory-list .list-item .image-container {
+        -width: 8em;
+    } */
     
     .inventory-information{
         width: 50%;
@@ -123,7 +125,7 @@
 
     .inventory-prices{
         height: 50%;
-        width: 30%;
+        width: 45%;
         display: flex;
         border-left: 1px solid #8f9199;
         flex-direction: row;
