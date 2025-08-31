@@ -7,89 +7,55 @@ import { connect } from "react-redux";
 import { useGetDiscountQuery } from "../../../../features/discount/discountApiSlice";
 
 // Components
-import AlertMessage from "../../../common/AlertMessage.js";
+// import AlertMessage from "../../../common/AlertMessage.js";
+import ErrorMessage from "../../../AlertMessage/ErrorMessage.js";
 // getDiscount, handlePromoCodeWindow, clearDiscountAlert,
 // discountAmount, message, isError, handleDiscountCode
 const PromotionalCodes = ({handlePromoCodeWindow }) => {
 
     const [promoCode, setPromoCode] =  useState("");
     const [trigger, setTrigger] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     // const [alertMessage, setAlertMessage] = useState("");
     // const [isErr, setIsErr] = useState(false);
 
-    const {
-        data:
-        discountData, isLoading,
-        isSuccess, isError, refetch
-    } = useGetDiscountQuery(promoCode, {enabled: trigger});
+    const { data:  discountData, isLoading, isSuccess, isError, refetch, error } = useGetDiscountQuery(promoCode, {skip: !trigger});
 
 
-    // const handleMessage = (msg, err) => {
-    //     setAlertMessage(msg);
-    //     setIsErr(err);
-    // }
-    // const clearMsgAlert = () => {
-    //     setAlertMessage("");
-    //     setIsErr(false);
-    // }
-
-    // const handleDiscountInput = (e) => {
-    //     setdiscountInput(e.target.value)
-    // }
-    
-    // const submitForm = (e) => {
-    //     e.preventDefault();
-
-    //     if(discountInput.trim() !== ""){
-    //         getDiscount(discountInput);
-    //     }
-    // }
-    // Handling the api call when var change
-    // useEffect( () => {
-    //     handleMessage(message, isError);
-    // } ,[message, isError]);
-    
-    // useEffect( () => {
-    //     if(discountAmount > 0 && message === "" && isError === false ){
-    //         handleDiscountCode(discountAmount);
-    //         handlePromoCodeWindow(false);
-    //     }
-    // }, [isErr, discountAmount]);
-
-    //clear alert message after 3 seconds
-    // useEffect( () => {
-    //     if(alertMessage !== '' ){
-    //         const timeoutId = setTimeout(() => {
-    //             // Clear Message
-    //             clearMsgAlert();
-    //             clearDiscountAlert();
-    //         }, 3000);
-    //         return () => clearTimeout(timeoutId);
-    //     }
-    // }, [alertMessage]);
-
-    // //clear data when unmounting
-    // useEffect( () => {
-    //     return() => {
-    //         clearMsgAlert();
-    //         clearDiscountAlert();
-    //     }
-    // }, []);
-
-    const handlePromotionalCode = (e) => {
-        setPromoCode(e.target.value)
-        
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message)
     }
 
+
+    useEffect( () => {
+        if(isError){
+            setErrorMessage(JSON.stringify(error))
+        }
+    }, [isError])
+
+    const handlePromotionalCode = (e) => {
+        setPromoCode(e.target.value)   
+    }
+
+    // this just sets the trigget to refetch the data
     const submitForm = (e) => {
         e.preventDefault();
         setTrigger(true);
-        refetch({ newParam: 'new value' });
     }
 
 
+    // this resets the riggers if the loading is false and trigger is true. so the user can retry the code
+    useEffect(() => {
+        if(isLoading == false && trigger == true)
+            setTrigger(false);
+    }, [trigger]);
+
     return (
         <div className="pop-window-container">
+
+            {
+                errorMessage && <ErrorMessage message={errorMessage} errorMessageHandler={errorMessageHandler}/>
+            }
             <div className="pop-window">
                 <p className="ftw-600 pt18">Aplica Código de Oferta</p>
 
