@@ -3,10 +3,7 @@ import React, { useEffect, Component, useState, Fragment, useCallback } from "re
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-
 import { formatCurrecy } from "../../../../utils/currencyFormatter";
-
-
 import POSProduct from "./POSProduct";
 // {productList, searchQuery, addItemToList, handleTagTabs, sku}
 
@@ -15,13 +12,7 @@ import { useGetCategoriesQuery } from "../../../../features/categories/categorie
 // Get Categories Here
 const POSProducts = ({addToShoppingCart, products, barcode}) => {
 
-    // const [categories, setCategories] = useState(['Jeans', 'Camisas', 'Chaquetas', 'Cargos', 'Blusas'])
-
-    const {
-        data:
-        categoriesData,
-        isLoading
-    } = useGetCategoriesQuery()
+    const {  data: categoriesData, isLoading } = useGetCategoriesQuery()
 
     // searchQuery Here
     const [searchQuery, setSearchQuery ] = useState('');
@@ -38,20 +29,8 @@ const POSProducts = ({addToShoppingCart, products, barcode}) => {
         setSearchQuery('')
     }
 
-    // const SelectProduct = (product) => {
-    //     const productItem = {
-    //         name: product?.product?.name,
-    //         sku: product?.sku,
-    //         unitPrice: product?.price,
-    //         units: 1,
-    //         price: product?.price * 1,
-    //     } 
-    //     addItemToList(productItem)
-    // }
-
-
     return (
-        <div className="pos-products-selector">
+        <div className="pos-products-selector gray-txt-90">
                 <div className='sku-input-container'> 
                     <div className="search-wrapper pos-srch-wrapper">
                         <div className="srch-bar-container pos-srch-cont">
@@ -79,9 +58,9 @@ const POSProducts = ({addToShoppingCart, products, barcode}) => {
                     </div>
                 </div>
                 {/* LIMIT TO 5 items at a time */}
-                <ul className="pos-category-selector"> 
+                <ul className="pos-category-selector div-background-color-white rounded-lg"> 
                     {
-                        categoriesData?.map( (categorie, index) => {
+                        categoriesData?.slice(0, 5)?.map( (categorie, index) => {
                             return <li onClick={ (e) => { handleTagTabs(e) } } 
                                        key={categorie?.categorie }
                                        className={ searchQuery === categorie?.categorie ? 'product-cat-active': ' '} 
@@ -93,11 +72,12 @@ const POSProducts = ({addToShoppingCart, products, barcode}) => {
 
             <ul className="pos-products-container">
                 {
+                 products?.length !== 0 ?
                     products?.filter( (element) =>
                         element?.sku?.toLowerCase()?.indexOf(searchQuery.toLowerCase()) >= 0 ||
-                        element?.product?.name?.toLowerCase()?.indexOf(searchQuery.toLowerCase())  >= 0
-                    )
-                    .map( (product) => {
+                        element?.product?.name?.toLowerCase()?.indexOf(searchQuery.toLowerCase())  >= 0 
+
+                    )?.map( (product) => {
                         return (
                             <POSProduct 
                                 key={product?.sku} 
@@ -105,8 +85,8 @@ const POSProducts = ({addToShoppingCart, products, barcode}) => {
                                 addToCart ={addToShoppingCart}
                                 barcode={barcode}
                             />
-                        )
-                    })
+                        ) })
+                    : <h3> No Hay Productos </h3>
                 } 
             </ul>
         </div>

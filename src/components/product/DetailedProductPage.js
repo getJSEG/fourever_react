@@ -1,207 +1,154 @@
 import React, { useState, useEffect }from "react";
-import { Link, NavLink, useParams} from "react-router-dom";
-// import { connect } from 'react-redux';
+import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 
-
 import { useGetProductQuery } from "../../features/product/productApiSlice";
+
+// Utils
+import { formatCurrecy } from "../../utils/currencyFormatter";
 
 // component
 import Loading from "../common/Loading";
 import VarientList from "./component/VarientList";
 import Gallery from "./component/Gallery";
-// import AlertMessage from "../../components/common/AlertMessage";
+import AlertMessage from "../../components/common/AlertMessage";
 
 //Styles
-import "../../static/css/pages/productDetail.css"
-import "../../static/css/components/productDetail/varientList.css"
-import "../../static/css/components/productDetail/VarientItemList.css"
-import "../../static/css/components/productDetail/createVarientFormCondense.css"
-import "../../static/css/components/productDetail/varientShortForm.css" 
-
-// {load_product, updateProduct, deleteVarient, isLoading, product, varients,
-//     isVarientCreated, varientCreationFail, productUpdated, clearVarientCrtn,
-//     isVarientLoading, varientMsg, varientUpdatedSuccess}
+import "../../static/css/pages/product/productDetail.css"
+import "../../static/css/pages/product/varientList.css"
+import "../../static/css/pages/product/VarientItemList.css"
 
 const DetailedProductPage  = ({}) => {
     
+    const location = useLocation();
+    let isVarError = location.state?.isError || false;
+    let varCreationMsg = location.state?.message || false;
+    let varCrearionVisible = location.state?.isVisible || '';
+
     const params = useParams();
     const productId = params?.id
 
     const {
-        data:
-        productData,
-        isLoading,
-        isSuccess, isError, error
-    } = useGetProductQuery(productId)
+        data:  productData, isLoading, isSuccess, error
+    } = useGetProductQuery(productId);
+
+    // const [editForm, setEditForm] = useState(false);
+    // const [formData, setFormData] = useState({ name: '', price: '', brand: '', item_cost: '' });
+    const [availableStock, setAvailableStock] = useState(0);
+
+    // Alert Mesage Handling state
+    const [isVisible, setIsVisible] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [message, setMessage] = useState("");
 
 
-    // const [varientState, setVarients] = useState([]);
-    // const [productState, setProduct] = useState('');
-    const [editForm, setEditForm] = useState(false);
-    const [stockAvailable, setstockAvailable] = useState(0);
-    // const [varientSForm, getVarientSForm] = useState(false);
-    // const [showErrmsg, setShowErrMsg] = useState(false);
-    
-    // const [saveEditedVarient, setSaveEditedVarient] = useState(false);
-
-    const [formData, setFormData] = useState({ name: '', price: '', brand: '', item_cost: '' });
-
-    // const varientFormHandler = () => {
-    //     getVarientSForm(!varientSForm)
-    // }
-
-    // // Action functions
-    // // Deletion of varient
-    // const delVar = (varient_id) => {
-    //     setVarients(varientState.filter( item => item.id !== varient_id ))
-    // }
-
-    // // Handler Functions
-    // // changin normal view to edit form
-    // const handleEditForm = () => {
-    //     setEditForm(true)
-    // }
-    // // saving Edited Main Product
-    // const handleSave = () => {
-    //     updateProduct(productId, formData)
-    //     setEditForm(false)
-    // }
-    // // Saving Edited Varients
-    // const handleSaveEditedVarient = (saveEditedVar) => {
-    //     setSaveEditedVarient(saveEditedVar)
-    // }
-    // // Handle Change for the main Product
-    // const handleChange = (event) => {
-    //     setFormData({
-    //         ...formData,
-    //         [event.target.name]: event.target.value
-    //     })    
-    // }
-
-    // // useEffect functiosn
-    // // call Apid and Setting new information when Editing form
-    // // When Component mounts this will be called
-    // useEffect(() => { 
-    //     load_product(productId);  
-    // },[]);
-
-    // useEffect(() => { 
-    //     if(varientUpdatedSuccess)
-    //         load_product(productId);  
-    // },[varientUpdatedSuccess, isVarientLoading]);
-
-    // useEffect( () => {
-    //     load_product(productId); 
-    //     setProduct(product.product);
-    // }, [productUpdated]);
-
-    // // When the components loads this will add the varient to [varientState]
-    // useEffect(() => {
-    //     setVarients([...varients])
-    //     // setProduct(product.product)
-    // },[isLoading, product, varients]);
-
-    //count all of the units and sets available stocks
+    //Sum all of the units and sets available stocks
     useEffect( () => {
-        let availableStock = 0;
-        productData?.variants?.map( item => availableStock = item.units + availableStock )
-        setstockAvailable(availableStock)
+        setAvailableStock(productData?.variants?.reduce( (accumulator, variant) => accumulator + variant.units, 0 ))
     }, [productData])
 
-    // useEffect(() => {
-    //     if(!isVarientLoading){
-    //         if(isVarientCreated){
-    //             showCompnentAlert();
-    //             load_product(productId); 
-    //             varientFormHandler();
-    //             setShowErrMsg(true);
-    //         }
-    //         if(varientCreationFail) {
-    //             showCompnentAlert();
-    //             setShowErrMsg(false)
-    //         } 
-    //     }
-    //   }, [isVarientLoading]);
+    const handleErrorMsgs = (isErr, isVisbl, msg) => {
+        setIsError(isErr);
+        setIsVisible(isVisbl);
+        setMessage(msg);
+    }
+    // resents message and visiblitiy of message
+    const resetAlertMeg = (isVis, msg) => {
+        setIsVisible(isVis);
+        setMessage(msg)
+    }
 
-    // useEffect(() => {
-    //     // This resets the varient creation to default state
-    //     clearVarientCrtn();
-    //     const timeoutId = setTimeout(() => {
-    //         setShowComponent(false);
-    //         return clearTimeout(timeoutId)
-    //       }, 3000);
-    // }, [showComponent]);
-  
+    useEffect( () => {
+        setIsVisible(varCrearionVisible);
+        setIsError(isVarError);
+        setMessage(varCreationMsg);
+    }, [isVarError, varCreationMsg, varCrearionVisible]);
+
+
+
     let content = isLoading ? <Loading /> : (
       <div className="main-container">  
+        {/* Alert Message */}
+        {
+            isVisible
+            ? <AlertMessage 
+                message={message}
+                isError={isError}
+                handleAlertMsg={resetAlertMeg}
+                />
+            :null
+        }
 
-        <h2 className="product-title-name"> Información sobre el Producto </h2>
-        {/* product information */}
+        {/* Page title */}
+        <p className="page-title"> Información sobre el Producto </p>
+
         
         <div className="background-container product-wrapper">
-            <div className="edit-save-button-container">
-                {/* <h1 className="product-detail-title"> {product.name}  </h1>
-                { editForm ? <button onClick={handleSave}> Salvar </button> : <button onClick={handleEditForm}> Editar </button>} */}
+            {/* product name and edit button */}
+            <div className="product-name">
+                <p className="gray-txt-90 pt20"> {productData?.name}  </p>
+                <span className="btn-primary edit-btn rounded-lg pointer" onClick={ () => { console.log("click")}}> 
+                    <svg width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                    </svg>
+                </span>
             </div>
         
             <div className="product-information-container">
                 <div className="product-information"> 
+                    
                     <Gallery varients={productData?.variants}> </Gallery>
 
-                    <div className="product-basic-information">
-                        <p className="basic-information-title"> Informacion Basica</p>
+                    <div className="gray-txt-90">
+                        <p className="pt18"> Informacion Basica</p>
 
                         <div className="product-detail-info-container">
                             <h3> Nombre: </h3>
-                            { editForm 
+                            <p className="pt13"> {productData?.name} </p>
+                            {/* { editForm 
                                 ? <input name="name" type="text"  placeholder={productData.name} value={formData.productName} onChange={handleChange} />
-                                : <p> {productData?.name} </p> }
+                                : <p> {productData?.name} </p> } */}
                         </div>
                         <div className="product-detail-info-container">
                             <h3> Marca: </h3>
-                            { editForm 
+                            <p className="pt13"> {productData?.brand} </p>
+                            {/* { editForm 
                                 ? <input name="brand" type="text"  placeholder={productData.brand} value={formData.productBrand} onChange={handleChange} />
-                                : <p> {productData?.brand} </p> }
+                                : <p> {productData?.brand} </p> } */}
                         </div>
                         <div className="product-detail-info-container">
                             <h3> Nuestro Costo: </h3>
-                            { editForm 
+                            <p className="pt13"> {formatCurrecy(productData?.cost || 0)}</p> 
+                            {/* { editForm 
                                 ? <input name="item_cost" type="number"  placeholder={productData.cost} value={formData.productCost} onChange={handleChange} />
-                                : <p> {productData?.cost}</p> }
+                                : <p> {productData?.cost}</p> } */}
                         </div>
-
-                        {/* <div className="product-detail-info-container">
-                            <h3> Costo: </h3>
-                            { editForm ? <input name="price" type="number"  placeholder={productData.cost} value={formData.productPrice} onChange={handleChange} /> : <p> {productState.price}</p> }
-                        </div> */}
-    
                     </div>
                 </div>
 
                 <div className="stock-information-container">
-                    <div className="stock-information"> 
-                        <h5 className="stock-title"> Articulos </h5>
-                        <div>
-                            <p> Cantidad Disponible </p>
-                            <h3> {stockAvailable} </h3>
+                    <div className="stock-information gray-bg-30"> 
+                        <p className="gray-txt-90 pt20"> Articulos </p>
+                        <div className="gray-bg-40">
+                            <p className="gray-txt-90 p1 pt15"> Unidades Disponible </p>
+                            <h3 className="gray-txt-90  pt25"> {availableStock} </h3>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         
+
+
+        {/* All Variant List */}
         <VarientList 
             productId={productData?.id}
             productName={productData?.name}
             variants = {productData?.variants}
-            // varientList={varientState}
-            // delVar={delVar} 
-            // varientFormHandler={varientFormHandler}
-            // varientSForm={varientSForm} 
-            // handleSaveEditedVarient={handleSaveEditedVarient}
-            // saveEditedVarient={saveEditedVarient}
-            />
+            handleErrorMsgs={handleErrorMsgs}
+        />
       </div>  
     )
 

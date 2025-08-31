@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { useGetStockLevelQuery } from "../../features/dashboard/dashboardApiSlice";
-
+import { formatCurrecy } from "../../utils/currencyFormatter";
 // Compoenents
 import Pagination from "../common/Pagination";
 import Loading from "../common/Loading";
@@ -24,10 +24,13 @@ const LowInventory  = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalItems, setTotalItems] = useState(stockLevelData?.length);
-    const [itemperPage, setItemsPerPafe] = useState(2);
+    const [itemsPerPage, setItemsPerPage] = useState(2);
 
-    // // Subset the items mapping
-    let subset =  stockLevelData?.slice((currentPage*itemperPage)-itemperPage, currentPage*itemperPage);
+    // const [startIndex, setStartIndex] = useState(0);
+    // const [endIndex, setEndIndex] = useState(itemsPerPage);
+
+    //Subset the items mapping
+    let subset =  stockLevelData?.slice((currentPage*itemsPerPage)-itemsPerPage, currentPage*itemsPerPage);
 
     const getCurrentPage = (childCurrentPage) => { setCurrentPage(childCurrentPage) }
 
@@ -40,10 +43,56 @@ const LowInventory  = () => {
         navigate(`/product/${productId}`);
     }
 
+    // useEffect( () => {
+    //     setStartIndex(startIndex + items)
+    // }, [currentPage])
+
+
+    // min 5 per page
+    
+
     let content = isLoading ? <Loading /> : ( 
     <section className="background-container low-inventory-container">
 
-        <h3 className="low-int-title"> Inventario Bajo </h3>
+        <h3 className='graph-title gray-txt-90'>Productos con Niveles Bajos</h3>
+
+        <p className="pt13 p1"> Total: <span className="text-color-red fw600"> { stockLevelData?.length } </span></p>
+
+        <div className="low-stock-container">
+            
+            <table className="low-stock-table">
+                <thead className="low-stock-table-head">
+                    <tr className="low-stock-table-head-row"> 
+                        <td className="low-stock-table-head-colum" > Nombre </td>
+                        <td className="low-stock-table-head-colum"> Unidades </td>
+                        <td className="low-stock-table-head-colum" > Nivel Minimos </td>
+                        <td className="low-stock-table-head-colum"> Precios </td>
+                    </tr>
+                </thead>
+
+                <tbody className="low-stock-table-body">
+                    {
+                        subset.map( (product, index) => 
+                            (
+                                <tr className="low-stock-table-body-row" key={index}> 
+                                    <td className="low-stock-table-body-colum" > 
+                                        <Link className="pointer color-txt-blue remove-underline" key={product?.id} to={`/product/${product?.id}`}>  
+                                            {product?.name} 
+                                        </Link>
+                                    </td>
+                                    <td className="low-stock-table-body-colum" > <div className="low-stock-units"> {product?.variants[0]?.units} </div> </td>
+                                    <td className="low-stock-table-body-colum" > {product?.variants[0]?.minUnits} </td>
+                                    <td className="low-stock-table-body-colum" > {formatCurrecy(product?.variants[0]?.price) } </td>
+                                </tr>
+                            )
+                        )
+                    }
+                    
+                </tbody>
+            </table>
+        </div>
+
+        {/* <h3 className="low-int-title"> Inventario Bajo </h3>
 
         <div className="low-inventory-list">
         {
@@ -69,12 +118,18 @@ const LowInventory  = () => {
 
         }   
         </div>
+ */}
 
-        <Pagination
-            getCurrentPage={getCurrentPage} 
-            totalItems = {totalItems}
-            itemPerPage={itemperPage}
-        />
+        <div className="min-units-pagination-container">
+            <div className="min-units-pagination-wrapper">
+            <Pagination
+                getCurrentPage={getCurrentPage} 
+                totalItems = {totalItems}
+                itemPerPage={itemsPerPage}
+            />
+             </div>
+        </div>
+
     </section> )
 
     return content

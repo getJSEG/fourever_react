@@ -80,51 +80,57 @@ const Pagination  = ({ getCurrentPage, totalItems, itemPerPage }) => {
       <div className="pagination-wrapper">
             <div className="pagination-container">
 
-                <button onClick={handlePrevPage} disabled={currentPage === 1} className="pagination-prev-page btn-4"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                    </svg>
-                </button>
+                <div className="previous-btn-container">
+                    <button onClick={handlePrevPage} disabled={currentPage === 1} className="pagination-prev-page btn-4"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                    </button>
+                </div>
 
-                <ul className="pagination-page-selector">
-                    <li onClick={handlePageClick}  
-                        className={`pagination-page ${currentPage === 1 ? 'page-selector-active' : ''}`}
-                        value={1}> 
-                        {1} 
-                    </li>
-                    {
-                        isFirstPageEllipsed ? <li>...</li> : null 
-                    }
-                    {   
-                        
-                        pages.filter(isFirstOrLast).map(page => { 
 
-                            return <li onClick={handlePageClick}  
-                                        className={`pagination-page ${currentPage === page ? 'page-selector-active' : ''}`}
-                                        key={page} 
-                                        value={page}> 
-                                        {page} 
-                                    </li>
-                        })
-                    }
+                <div className="numbering-container">
+                    <ul className="pagination-page-selector">
+                        <li onClick={handlePageClick}  
+                            className={`pagination-page ${currentPage === 1 ? 'page-selector-active' : ''}`}
+                            value={1}> 
+                            {1} 
+                        </li>
+                        {
+                            isFirstPageEllipsed ? <li>...</li> : null 
+                        }
+                        {   
+                            
+                            pages.filter(isFirstOrLast).map(page => { 
 
-                    {
-                        isLastPageEllipsed ? <li>...</li> : null
-                    }
+                                return <li onClick={handlePageClick}  
+                                            className={`pagination-page ${currentPage === page ? 'page-selector-active' : ''}`}
+                                            key={page} 
+                                            value={page}> 
+                                            {page} 
+                                        </li>
+                            })
+                        }
 
-                    { hasLastPage ? <li onClick={handlePageClick}  
-                                        className={`pagination-page ${currentPage === pageCount ? 'page-selector-active' : ''}`}
-                                        value={pageCount}> 
-                                        {pageCount} 
-                                    </li> : null
-                    }
-                </ul>
-                
-                <button onClick={handleNextPage} disabled={currentPage === pageCount} className="pagination-next-page btn-4"> 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                    </svg>
-                </button>
+                        {
+                            isLastPageEllipsed ? <li>...</li> : null
+                        }
+
+                        { hasLastPage ? <li onClick={handlePageClick}  
+                                            className={`pagination-page ${currentPage === pageCount ? 'page-selector-active' : ''}`}
+                                            value={pageCount}> 
+                                            {pageCount} 
+                                        </li> : null
+                        }
+                    </ul>
+                </div>
+                <div className="next-btn-container">
+                    <button onClick={handleNextPage} disabled={currentPage === pageCount} className="pagination-next-page"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     )

@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate} from "react-router-dom";
 
-import { Document, Page, Text, View, StyleSheet, Font }from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Image }from '@react-pdf/renderer';
 import { PDFViewer } from "@react-pdf/renderer";
+
+import image from "../../../../static/images/company-logo-drak-gray-trans.png";
 
 // font 
 import incosolataLight from '../../../../utils/fonts/InconsolataLight.ttf';
@@ -115,26 +117,50 @@ const PrintReceipt = () => {
 
 
     const Receipt = () => {
+
+        const [changeDue, setChangeDue] = useState(0);
+        const [amountPaid, setAmountPaid] = useState(0);
+
+        useEffect( () => {
+            const transactionType = receiptData?.paymentMethod?.transactionType
+
+            if (transactionType == "bank_transfer") {
+                setAmountPaid(receiptData?.paymentMethod?.transferPaymentMethod?.amount)
+            }else if (transactionType == "credit_card") {
+                setAmountPaid(receiptData?.paymentMethod?.creditcardPaymentMethod?.amount)
+            }else {
+                setAmountPaid(receiptData?.paymentMethod?.cashPaymentMethod?.amount)
+                setChangeDue(receiptData?.paymentMethod?.cashPaymentMethod?.changeDue)
+            }
+
+        }, [receiptData])
+
         return (
         <Document>
             <Page size={{width: 200}} style={styles.page}>
                 <View style={styles.topSection}>
+                    <View>
+                        <Image src={image} style={{ width: 150, margin:"auto" }}/>
+                    </View>
                     <Text>RECIBO</Text>
                 </View>
                 {/* This is where the products will go */}
                 <View style={styles.middleSection}>
 
                     {
-                        receiptData?.lineItems.map( item => {
+                        receiptData?.OrderLine?.map( item => {
                             return ( <view style={styles.middleSectionProduct}>
                                         <View style={styles.prodInfo}>
                                             <view style={styles.spacingRight}> 
-                                                <Text>{item?.qty}x</Text> 
+                                                <Text>{item?.quantity}x</Text> 
+                                            </view>
+                                            <view style={styles.spacingRight}> 
+                                                <Text>{item?.name}</Text> 
                                             </view>
                                             
                                         </View>
                                         <View style={styles.amount}> 
-                                            <Text>{formatCurrecy((Number(item?.price )* Number(item?.qty)))}</Text> 
+                                            <Text>{formatCurrecy(item?.subtotal)}</Text> 
                                         </View>
                                     </view>)
 
@@ -147,34 +173,30 @@ const PrintReceipt = () => {
                 <View style={styles.bottomSection}>
                     <view style={styles.paymentInfo}>
                         <Text>Monto Total</Text>
-                        <Text>{formatCurrecy(receiptData?.receipt?.grandTotal)}</Text>
+                        <Text>{formatCurrecy(receiptData?.totalAmount)}</Text>
                     </view>
                 </View>
                     {/* Transaction type */}
                 <View style={styles.paymentInfo}>
                     <Text>tipo de transac.</Text>
-                    <Text>{receiptData?.receipt?.transaction_type}</Text>
+                    <Text>{receiptData?.paymentMethod?.transactionType}</Text>
                 </View>
                     {/* How much customer paide */}
                 <View style={styles.bottomSection}>
                     <view style={styles.paymentInfo}>
                         <Text>Pagado</Text>
-                        <Text>{formatCurrecy(receiptData?.receipt?.TotalReceived)}</Text>
+                        <Text>{formatCurrecy(amountPaid)}</Text>
                     </view>
 
                     <view style={styles.paymentInfo}>
                         <Text>Cambio</Text>
-                        <Text>{formatCurrecy(0)}</Text>
+                        <Text>{formatCurrecy(changeDue || 0)}</Text>
                     </view>
                     
                 </View>
 
                 <View style={styles.thanYouSec}>
                     <Text>Gracias por tu Compra</Text>
-                </View>
-
-                <View style={styles.thanYouSec}>
-                    <Text>4EVER</Text>
                 </View>
 
             </Page>

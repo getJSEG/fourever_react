@@ -1,8 +1,5 @@
-.pos-line-item:nth-child(odd){ background-color: var(--third-color); }
-
-.pos-line-item:nth-child(even){
-    background-color: #fff;
-}
+.pos-line-item:nth-child(odd){ background-color: var(--40); }
+.pos-line-item:nth-child(even){ background-color: #fff; }
 
 .pos-line-item{
     height: 2em;
@@ -87,11 +84,10 @@ td {
     position: relative;
 }
 
-.pos-item-remove button{
+/* .pos-item-remove button{
     background-color: #ffffff00;
     border: none;
     border-radius: 5px;
-    /* padding: .5em; */
 }
 
 .pos-item-remove button svg{
@@ -102,7 +98,7 @@ td {
 }
 .pos-item-remove button svg:hover{
     background-color: var(--bad-btn-active);
-}
+} */
 
 
 .shoppingcart-change-qty{

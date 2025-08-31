@@ -9,7 +9,7 @@ const ProductDetailSetting  = ({handleCloseWindow}) => {
 
     const handleClickOutside = (event) => {
         if (settingsWindowRef.current && !settingsWindowRef.current.contains(event.target)) {
-            handleCloseWindow(false)
+            handleCloseWindow(false);
         }
     }
     // Event Listener
@@ -31,7 +31,7 @@ const ProductDetailSetting  = ({handleCloseWindow}) => {
                         </svg>
                     </div>
                     <div className="delt-button-wrd-ctnr">
-                        <p className="delt-button-wrd"> Delete </p>
+                        <p className="delt-button-wrd"> Borrar </p>
                     </div>
                 </button>
             </div>

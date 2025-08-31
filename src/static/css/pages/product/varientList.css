@@ -1,0 +1,83 @@
+.b.varient-list{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.varient-list.header{
+    display: flex;
+    margin-left: .5em;
+    padding: 1em 0;
+    font-size: 15pt;
+    font-weight: 500;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Buttons */
+.variant-btn{
+    padding: .75em;
+    display: flex;
+    align-items: center;
+    margin: 0 1em;
+}
+
+
+/* table Style */
+.list-table{
+    width: 100%;
+    padding: 1em;
+    border-collapse: collapse;
+}
+.head-title{
+    font-weight: 500;
+    font-size: 11pt;
+    text-align: left;
+}
+.varient-line-item:nth-last-child(n+2){
+    border-bottom: 1px solid var(--50);
+}
+.table-body-info {
+    text-align: left;
+    justify-content: left;
+    padding: 1em 0;
+    margin: 1em 0;
+}
+/* This is the title and button for removing varient */
+.remove {
+    text-align: right;
+    justify-items: right;
+}
+
+.varient.table-body {
+    overflow-y: scroll;
+    max-height: 20em;
+}
+
+
+.trash-icon{
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: .75em;
+}
+
+.sku.table-body-info{
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-varient-item button:hover{
+    cursor: pointer;
+}
+
+
+
+.varient-dowload{
+    text-align: center;
+    align-items: center;
+}
+
+/* .create-varient-d{
+    padding:  0;
+} */

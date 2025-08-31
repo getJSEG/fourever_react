@@ -1,0 +1,13 @@
+.variant-editable-btn-container{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.variant-info-container{
+    display: flex;
+    align-items: center;
+    margin: 1em 1em;
+}

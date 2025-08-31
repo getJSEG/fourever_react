@@ -6,7 +6,7 @@ class Gallery extends React.Component {
     
     render() {
         return (
-            <div className="carousel-container">
+            <div className="carousel-container" style={{height:"10em"}}>
                 <Carousel transitionTime="500" infiniteLoop>
                     {this.props.varients?.map( (varient, i) => {
                         return (

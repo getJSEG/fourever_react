@@ -18,7 +18,6 @@
 }  
 
 .pos-item-information-container{
-    background-color: #fff;
     width: 35%;
     box-shadow: 0px -3px 25px -3px rgba(0,0,0,0.1);
 }
@@ -27,7 +26,6 @@
 /* Payament information */
 .pos-payment-information{
     width: 100%;
-    color: var(--primary-color);
 }
 
 /* DISCOUNT Button Style */
@@ -37,7 +35,6 @@
     border-radius: .5em;
     position: relative;
     margin: 1em auto;
-    background-color: var(--third-color);
 }
 .discount-container, .discount-button-container{
     display: flex;
@@ -51,7 +48,6 @@
 .discount-button-container button {
     border: none;
     cursor: pointer;
-    color: #fff;
     font-size: 8pt;
     margin: .25em;
     font-weight: 600;
@@ -87,7 +83,6 @@
 
 /* total cost of all items style */
 .pos-price-information{
-    background-color: var(--third-color);
     width: 100%;
     display:flex;
 }
@@ -111,18 +106,7 @@
     justify-content: space-between;
 }
 
-.pos-pay-button button{ background-color: var(--good-btn); }
-.pos-cancel-button button, .discount-button-container button{ background-color: var(--bad-btn); }
-
-.pos-pay-button button:active, .pos-pay-button button:hover { background-color: var(--good-btn-active); }
-
-.pos-cancel-button button:active, .pos-cancel-button button:hover,
-.discount-button-container button:active, .discount-button-container button:hover { background-color: var(--bad-btn-active); }
-
-
-
 .pos-cancel-button button, .pos-pay-button  button{
-    color: #fff;
     cursor: pointer;
     font-weight: 500;
     font-size: 9pt;
@@ -171,22 +155,16 @@
         flex-direction: row;
         justify-content: center;
         gap: 1em;
-        border-radius: 1em;
         font-weight: 600;
-        background-color: #fff;
     }
     .pos-category-selector li {
         padding: .5em .75em;
         cursor: pointer;
     }
-    .pos-category-selector li:hover {
-        background-color: rgb(199, 199, 199);
-        border-radius: .5em;
-    }
     .product-cat-active {
-        background-color: black;
-        color: #fff;
         border-radius: .5em;
+        background-color: var(--90);
+        color:var(--20)
     }
 
     /* Wrapper of the payment ifnromation only */

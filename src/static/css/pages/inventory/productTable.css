@@ -1,0 +1,82 @@
+.inventory-list{
+    min-height: 30em;
+    display: flex;
+    padding: 0 2em;
+    flex-direction: column;
+    justify-content:flex-start;
+}
+
+.product-list-item {
+    display: flex;
+    margin: .25em 0;
+}
+
+.clickable-position {
+    width: 100%;
+    padding: .5em 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Elipsis Controls */
+.inventory-controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-list-controls{
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+.inventory-information{
+    text-align: left;
+    width: 90%;
+    margin: auto .25em;
+    padding: 0 1em;
+}
+
+.varients{
+    background-color: var(--primary);
+    color: #fff;
+    width: 90%;
+    font-size: 9pt;
+}
+
+.secondary-information .varients{
+    width: 100%;
+    display: inline;
+}
+
+.inventory-prices{
+    display: none;
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 770px) {
+    .inventory-prices{
+        height: 50%;
+        width: 45%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .inventory-prices .retail-prices, .inventory-prices .inventory-cost {
+        text-align: left;
+    }
+    
+    .retail-prices .title, .inventory-cost .title{
+        font-weight: 600;
+        font-size: 10pt;
+        height: 50%;
+        text-transform: uppercase;
+    }
+
+    
+}

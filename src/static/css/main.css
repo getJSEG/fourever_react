@@ -1,9 +1,9 @@
 @import url("./pages/login.css");
-@import url("./components/common/button.css");
+@import url("./components/pagination.css");
 @import url("./components/common/windows.css");
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
-
+@import url("./Style.css");
 
 *{
     font-family: "Poppins", sans-serif;
@@ -22,29 +22,51 @@ p, div, h1, h2, h3, h4, h5,h6, span{
     margin: 0; 
 }
 
-
 .main-container{
     padding: 0 1em 5em 1em;
 }
 
 
 :root{
-    --primary-color: #313131;
-    --third-color: #ecedee;
-    --secondary-color: #b1b7bd;
-    --success: #01ae3de2;
-    --warning: #bc0117d8;
-
-    --good-btn: #31a28a;
-    --good-btn-active: #237d69;
-    --bad-btn: #f77070;
-    --bad-btn-active: #b74f4f;
+    /* colors */
+    --transparent: transparent;
+    --black: #22292f;
+    --white: #fff;
+    --white-50: hsla(0, 0%, 100%, .5);
+    --danger: #e74444;
+    --success: #21b978;
+    --warning: #ffeb3b;
+    --info: #03a9f4;
+    --primary: #4099de;
+    --primary-dark: #297ec0;
+    --primary-70: rgba(64, 153, 222, .7);
+    --primary-50: rgba(64, 153, 222, .5);
+    --primary-30: rgba(64, 153, 222, .3);
+    --primary-10: rgba(64, 153, 222, .1);
+    --logo: #252d37;
+    --sidebar-icon: #b3c1d1;
+    --20: #f6fbff;
+    --30: #f4f7fa;
+    --40: #eef1f4;
+    --50: #e3e7eb;
+    --60: #bacad6;
+    --70: #b3b9bf;
+    --80: #7c858e;
+    --90: #3c4b5f;
+    --90-half: rgba(40, 54, 61, .5);
+    --warning-light: #fff382;
+    --warning-dark: #684f1d;
+    --success-light: #c6f6d5;
+    --success-dark: #38a169;
+    --danger-light: #fed7d7;
+    --danger-dark: #e53e3e;
+    --info-light: #bee3f8;
+    --info-dark: #3182ce;
 }
 
 
 
 @media only screen and (min-width: 770px) {
-
     .main-container{
         position: relative;
         right: 0;

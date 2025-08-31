@@ -10,10 +10,17 @@ import { apiSlice } from "../../app/api/apiSlice";
                 body: { ...credentials }
             })
         }),
+        logout: builder.mutation({
+            query: () => ({
+                url: '/logout',
+                method: 'POST'
+            })
+        }) 
     })
  })
 
 
  export const {
-    useLoginMutation
+    useLoginMutation,
+    useLogoutMutation
  } = authApiSlice

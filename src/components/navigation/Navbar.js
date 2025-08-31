@@ -36,15 +36,14 @@ const Navbar = () => {
                     </NavLink>
                 </li>
 
-                {/* <li className="li-container">
-                    <NavLink className="buscar nav-links" to="/search"> 
-                        <svg xmlns="http://www.w3.org/2000/svg" className="nav-i-c-a-c" width="23" height="23" fill="none" viewBox="15 15 20 20">
-                            <path  strokeMiterlimit="10" strokeOpacity=".8" strokeWidth="1.534" d="M23.308 30.51c3.978 0 7.203-3.224 7.203-7.203 0-3.978-3.225-7.202-7.203-7.202-3.979 0-7.203 3.224-7.203 7.203 0 3.978 3.224 7.203 7.203 7.203z"></path>
-                            <path  strokeLinecap="round" strokeMiterlimit="10" strokeOpacity=".8" strokeWidth="1.534" d="M28.4 28.4l3.495 3.495"></path>
+                <li className="li-container">
+                    <NavLink className="buscar nav-links" to="/shipping"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="barcode-icon" viewBox="0 0 16 16">
+                            <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
                         </svg>
-                        <p className="icon-name nav-i-c-a-c"> Buscar </p>
+                        <p className="icon-name nav-i-c-a-c"> Envios </p>
                     </NavLink>
-                </li> */}
+                </li>
 
                 <li className="li-container">
                     <NavLink className="ventas nav-links" to="/point-of-sales"> 

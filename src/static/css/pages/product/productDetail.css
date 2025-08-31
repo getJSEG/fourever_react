@@ -1,0 +1,163 @@
+.product-wrapper{ margin-bottom: 2em; }
+
+
+.product-name{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;;
+}
+
+
+.product-information-container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+}
+
+
+
+
+.product-detail-info-container{
+    width: 100%;
+    padding: .5em  0 .5em 0;
+}
+
+.product-detail-info-container h3{
+    float:left;
+    padding-right: 1em;
+}
+
+
+
+
+
+
+
+/* ITEMS MIGHT NOT BE NEEDED */
+.product-information{
+    width: 80%;
+    margin: auto;
+    padding: 1em;
+}
+
+.carousel .carousel-status {
+    top: 10px;
+    right: 30px;
+}
+
+.carousel.carousel-slider{
+    border-radius: 2em;
+    max-height: 30em;
+}
+.thumb{
+    border-radius: .25em;
+}
+.carousel .thumbs-wrapper {
+    padding: 0;
+    margin: 0;
+}
+
+.stock-information-container{
+    width: 50%;
+    padding: 1em;
+}
+
+.stock-information{
+    border-radius: 1em;
+    padding: 1em;
+    height: 95%;
+}
+
+.stock-information div {
+    margin: auto;
+    text-align: center;
+    border-radius: 1em;
+}
+
+
+.stock-title{
+    font-size: 17pt;
+    color:#343434;
+}
+
+/* Product Information End */
+
+.product-image-container {
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    gap: 1em;
+    overflow: scroll;
+}
+
+.product-images div{
+    flex-direction: row;
+    padding: 3em;
+    border: 1px solid rgba(204, 204, 204, 0.803);
+    border-radius: 3px;
+    background-color: rgba(201, 200, 200, 0.631);
+}
+
+.button-link{
+    padding: .15em .15em;
+    border-radius: 5px;
+    margin-right: 1em;
+    background-color: black;
+}
+
+
+
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.varient-line-item .img img{
+    padding:.5em;
+    border: 1px solid rgba(204, 204, 204, 0.803);
+    border-radius: 3px;
+    background-color: rgba(201, 200, 200, 0.631);
+}
+
+
+.pos-trsh-icon{
+   fill: #919191d1;
+}
+
+.hide-item{ display: none; }
+
+.secondary-information .units{ padding-left: 1em; }
+
+/* Desktop Style */
+@media only screen and (min-width: 770px) {
+    #product-page-container{
+        width: 87%;
+        padding-left: 5em;
+        height: 100vh;
+        position: absolute;
+        right:0;
+    }
+
+    .hide-item{
+        display: inline;
+    }
+
+    .sku{ 
+        display: table-cell; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .sku-head { display: table-header-group }
+
+    .product-images{
+        overflow:visible
+    }
+
+
+    .product-information-container{
+        flex-direction: row;
+    }
+}

@@ -14,19 +14,17 @@ export const uploadImage = async(urls, images) => {
             formData.append('file', images[index]?.image);
         
             return axios.post(url, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            responseType: 'blob',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                responseType: 'blob',
             });
         }
       });
     
-
-
     try{
-
         const responses = await Promise.all(uploadPromises);
+        console.log(responses)
         return responses;
     }catch (error) {
         console.log(JSON.stringify(error))

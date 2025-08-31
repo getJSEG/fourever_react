@@ -1,7 +1,6 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
 //This get the list of products
-// TODO: RENAME TO categories
 const categoriesApiSlice = apiSlice.injectEndpoints({
     tagTypes: ['Categories'],
     endpoints: builder => ( {
@@ -12,7 +11,7 @@ const categoriesApiSlice = apiSlice.injectEndpoints({
     })
  })
 
- export const  { 
+export const  { 
     useGetCategoriesQuery,
 } = categoriesApiSlice
 

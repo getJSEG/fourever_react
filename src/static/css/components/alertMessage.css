@@ -8,7 +8,6 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
-
 .alert-msg {
     width: 50%;
     display: flex;
@@ -28,17 +27,17 @@
 }
 
 
-/* Error Only */
+/* Error Color */
 .error-alert-msg{
     width: 100%;
-    background: #bc0117d8;
+    background: var(--danger-dark);
 }
 
 
-
+/* Success Color */
 .success-alert-msg{
     width: 100%;
-    background: #01ae3de2;
+    background: var(--success-dark);
 }
 
 
@@ -48,12 +47,3 @@
     font-weight: 400;
     text-transform: capitalize;
 }
-
-
-/* .alert.success{
-    background-color: rgba(76, 151, 1, 0.615);
-}
-
-.alert.error{
-    background-color: rgba(245, 2, 2, 0.575);
-} */

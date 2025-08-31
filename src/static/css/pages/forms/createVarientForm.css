@@ -1,0 +1,91 @@
+.create-varient-full-form{
+    display:block;
+    margin: 1em 0;
+}
+
+.variant-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+
+}
+
+.required-inputs{
+    width: 100%;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1em;
+    padding: 1em 0;
+}
+
+.varient-form-wrapper{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: .5em 0;
+}
+
+
+/* Selectors */
+.selected-items{
+    display: flex;
+}
+
+.user-selected-items{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.user-selected-item{
+    display: flex;
+    color: var(--90);
+    background-color: var(--50);
+}
+
+.u-s-selected-item{
+    padding: .25em .25em .25em 1em;
+}
+
+.u-s-item-remove{
+    border-radius: 0 .5em .5em 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0 .5em;
+}
+
+
+.selector-data{
+    display: flex;
+    flex-direction: row;
+    padding: .5rem;
+    gap: 1em;
+}
+.u-s-item-remove:hover{
+    background-color: var(--danger);
+}
+.select-data-item{
+    background-color: var(--70);
+    color: var(--white);
+    padding: .25em 1em;
+}
+
+.select-data-item{
+    background-color: var(--80);
+    color: var(--white);
+    padding: .25em 1em;
+}
+.selected{
+    background-color: var(--50);
+}
+
+.arrow-down-container{
+    display: flex;
+    align-items: center;
+    padding-left: 1em;
+}
+

@@ -1,83 +1,27 @@
 import React, { useEffect, Component, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-
-import { useGetLocationQuery } from "../../../../features/location/locationApiSlice";
-
 import { formatCurrecy } from "../../../../utils/currencyFormatter";
-import { setStoreInfo } from "../../../../features/location/locationSlice";
-// Selectors
-import { selectStoreTax } from "../../../../features/location/locationSlice";
-import { selectIsPreTax } from "../../../../features/location/locationSlice";
-
 
 // Components
 import CancelAlert from "./CancelAlert";
 import PromotionalCodes from "./PromotionalCodes";
 import Discount from "./Discount";
-import Payment from "../payment/Payment";
 
-const OrderSummary = ({shoppingCart, handleClearShoppingCart}) => {
+const OrderSummary = ({clearShoppingcartHandler, order, orderHandler, paymentWindowHandler}) => {
 
-    const{
-        data:
-        locationData,
-        isLoading
-    } = useGetLocationQuery();
-    const dispatch = useDispatch();
-
-    // When Component loads get the tax info
-    useEffect( () => {
-        dispatch(setStoreInfo({...locationData} ));
-    }, []);
-
-    const taxPercentage = useSelector( selectStoreTax);
-    const isPreTax = useSelector(selectIsPreTax);
-    const [subtotal, setSubtotal] = useState(0);
-    const [grandTotal, setGrandTotal] = useState(0);
-    const [discount, setDiscount] = useState(0);
     const [isCdw, setIsCdw] = useState(false);
     const [isPromoCodeW, setIsPromocodeW] = useState(false);
-    const [clearCart, setClearCart] = useState(false);
+
     const [cancelWindow, setCancelWindow] =  useState(false);
-    const [paymentWindow, setPaymentWindow] = useState(false);
 
-    const [orderSummary, setOrderSummary] = useState({})
-
-    const calculateTotal = () => {
-        let productsSubTotal = shoppingCart.reduce( (total, product) => total + Number(product?.subtotal), 0)
-        setSubtotal(productsSubTotal)
-
-        if(discount > 0 ){
-            productsSubTotal = productsSubTotal - ((discount/100) * productsSubTotal)
-        }
-
-        if(isPreTax){
-            productsSubTotal = productsSubTotal + (taxPercentage/100) * productsSubTotal
-        }
-        setGrandTotal(productsSubTotal)
-    }
-
-    useEffect(() => {
-        calculateTotal()
-    }, [shoppingCart, discount])
-
-    // This handles Promotional cupons/codes
+    // This handles promo window ope/close
     const handlePromoCodeWindow= (e, isOpen) => {
         setIsPromocodeW(isOpen)
     }
-    // This handles the custome Discount Window
+    // This handles the custom Discount Window
     const handleCdw = (isOpen) => {
         setIsCdw(isOpen)
-    }
-    // This clears the cart and all of the info
-    const handleClearCart = (isCancel) => {
-        setClearCart(isCancel);
-        setDiscount(0);
-        setGrandTotal(0);
-        setSubtotal(0);
-        // Clear the cart here
-        handleClearShoppingCart();
     }
 
     // This handles if the window is open or closed
@@ -86,33 +30,16 @@ const OrderSummary = ({shoppingCart, handleClearShoppingCart}) => {
     }
 
     const handleDiscount = (discnt) => {
-        setDiscount(discnt)
+        orderHandler({discount: discnt })
     }
-
-    const handlePaymentWindow = (isOpen) => {
-        setPaymentWindow(isOpen);
-    }
-
-    // This create at obrder summary of all of the information
-    useEffect(()=> {
-        setOrderSummary({
-            "discount": discount,
-            "taxes": taxPercentage,
-            "includeTaxes": isPreTax,
-            "includeDiscount": discount > 0,
-            "subtotal": Number(subtotal).toFixed(2) ,
-            "grandTotal": Number(grandTotal).toFixed(2),
-        })
-        
-    }, [discount, taxPercentage, isPreTax, grandTotal, subtotal])
 
     return(
-        <div className="pos-payment-information">
+        <div className="pos-payment-information gray-bg-30">
             <div className="discount-container"> 
                 <div> <p> Agregar </p> </div>
                 <div className="discount-button-container">
-                    <button onClick={ (e) => handlePromoCodeWindow(e, true) }> <h2> Cupones </h2> </button>
-                    <button onClick={ (e) => handleCdw(e, true) }> <h2> Descuento </h2> </button>
+                    <button className="red-bg-color gray-txt-20"  onClick={ (e) => handlePromoCodeWindow(e, true) }> <h2> Cupones </h2> </button>
+                    <button className="red-bg-color gray-txt-20"  onClick={ (e) => handleCdw(e, true) }> <h2> Descuento </h2> </button>
                 </div>
             </div>
 
@@ -120,70 +47,44 @@ const OrderSummary = ({shoppingCart, handleClearShoppingCart}) => {
                 <div className="item-and-discount-container">
                     <div className="item-and-discount-labels pos-final-price-info">
                         <label> Subtotal </label>
-                        <label className={`${ isPreTax ? 'include_tax': 'dont-include-tax'}`}> IVA </label>
+                        <label className={`${ !order?.preTax ? 'include_tax': 'dont-include-tax'}`}> IVA </label>
                         <label> Descuento </label>
                         <label> Total </label>
                     </div>
                     <div className="item-and-discount-info pos-final-price-info">
-                        <p> { formatCurrecy(subtotal) }</p>
-                        <p className={`${ isPreTax ? 'include_tax': 'dont-include-tax'}`} > { formatCurrecy((taxPercentage/100) * subtotal) } </p>
-                        <p> { formatCurrecy((discount/100) * subtotal) } </p>
-                        <p> { formatCurrecy(grandTotal)} </p>
+                        <p> { formatCurrecy(order?.subtotal) }</p>
+                        <p className={`${ !order?.preTax ? 'include_tax': 'dont-include-tax'}`} > { formatCurrecy(order?.tax) } </p>
+                        <p> { formatCurrecy(order?.discount) } </p>
+                        <p> { formatCurrecy(order?.totalAmount)} </p>
                     </div>
                 </div>
             </div>
 
-            <div className="pos-button-container">
-                <div className="pos-cancel-button">
-                    <button onClick={ (e) => { handleCancelWindow(e, true) } }> 
+            <div className="pos-button-container ">
+                <div className="pos-cancel-button red-bg-color rounded-lg">
+                    <button className="red-bg-color gray-txt-20"  onClick={ (e) => { handleCancelWindow(e, true) } }> 
                         <h2> Cancelar </h2>
                     </button>
                 </div>
-                <div className="pos-pay-button">
-                    <button onClick={ (e) => handlePaymentWindow(true) }> <h2> Realizar Pago </h2> </button>
+                <div className="pos-pay-button green-bg-color rounded-lg">
+                    <button  className="green-bg-color gray-txt-20" onClick={ (e) => paymentWindowHandler(true) }> <h2> Realizar Pago </h2> </button>
                 </div>
             </div> 
 
 
             {   
-                cancelWindow
-                ? <CancelAlert 
-                    handleClearCart={handleClearCart}
-                    handleCancelWindow={handleCancelWindow}
-                    />
-                : null
+                cancelWindow && <CancelAlert  handleClearCart={clearShoppingcartHandler}
+                                              handleCancelWindow={handleCancelWindow} />
             }
 
             {
-                isPromoCodeW
-                ? <PromotionalCodes
-                    handlePromoCodeWindow={handlePromoCodeWindow}
-                    />
-                : null
-
+                isPromoCodeW && <PromotionalCodes handlePromoCodeWindow={handlePromoCodeWindow} />
             }
 
             {
-                isCdw
-                ? <Discount 
-                    customDiscountWindow = {handleCdw}
-                    handleDiscount={handleDiscount}
-                    shoppingCart={shoppingCart}
-                    />
-                : null
+                isCdw && <Discount customDiscountWindow = {handleCdw}
+                                    handleDiscount={handleDiscount}  />
             }
-
-            {
-                paymentWindow
-                ? <Payment 
-                    handlePaymentWindow={handlePaymentWindow}
-                    orderSummary = {orderSummary}
-                    shoppingCart={shoppingCart}
-                    grandTotal = {grandTotal}
-                />
-                : null
-            }
-
         </div>
     );
 }

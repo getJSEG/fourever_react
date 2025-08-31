@@ -5,7 +5,7 @@ const expensesApiSlice = apiSlice.injectEndpoints({
     tagTypes: ['Expenses'],
     endpoints: builder => ( {
         getExpenses:  builder.query({
-            query: ({startDate, endDate}) => `/accounting/expenseReport?startDate=${startDate}&endDate=${endDate}`,
+            query: () => `/accounting/expenses`,
         })
     })
  })

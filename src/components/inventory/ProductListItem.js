@@ -1,23 +1,23 @@
 import React, { useState, useEffect }from "react";
 import { useLocation, NavLink, useNavigate} from 'react-router-dom';
-import { connect } from 'react-redux';
 
 // Component
 import ProductDetailSetting from "./components/ProductDetailSetting";
-import DeleteAlertMessage from "./components/DeleteAlertMessage";
+import ConfirmationWindow from "../cofirmationWindow/ConfirmationWindow";
 
 // Utils
 import { formatCurrecy } from "../../utils/currencyFormatter";
+import { useDeleteProductMutation } from "../../features/products/productsApiSlice";
 
-const ProductListItem  = ({ product }) => {
+const ProductListItem  = ({ product, handleDeleteProduct}) => {
 
     const navigate = useNavigate();
-    // { product, handleClickEvent}
-    // const [units, setUnits] = useState(0)
-    // // This is Small setting window 
-    const [productSettingWindow, setProductSettingWindow] = useState(false)
-    // // Confirmation Deletion Window
-    const [closeWindow, setCloseWindow] =  useState(false)
+    const [productSettingWindow, setProductSettingWindow] = useState(false);
+
+    // Confirmation Deletion Window
+    const [closeWindow, setCloseWindow] =  useState(false);
+    const deleteMessage = `Estar Seguro que quires borrar ${product?.name}`
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
     // // This Opens Small Setting for the product
     const handleSettingWindow  = () => { setProductSettingWindow(!productSettingWindow) }
@@ -35,9 +35,23 @@ const ProductListItem  = ({ product }) => {
         navigate(`/product/${productId}`);
     }
 
+    // handles delete product
+    const deleteProduct = () => {
+        handleDeleteProduct(product?.id);
+    }
+
+    // unmounts components
+    useEffect( () => {
+        return() => {}
+    }, [])
 
     return(
-        <li className="list-item">
+        <li className="product-list-item
+                       div-background-color-white
+                       div-border-blue-gray-color
+                       rounded-lg
+                       gray-bg-40">
+
             <div className="clickable-position" onClick={() => handleProductItemClick(product?.id)}>
                 {/* <div className={`${product?.variants?.image !== null && product?.variants?.image?.link ? 'has-image': ''} image-container`}>
                     {
@@ -49,19 +63,17 @@ const ProductListItem  = ({ product }) => {
 
                 <div className="inventory-information">
                     <div className="b-title">
-                        <h2 className="title"> {product?.name}</h2>
+                        <p className="pt18"> {product?.name}</p>
                     </div>
 
                     <div className="secondary-information"> 
-                        {
-                            <span className="varients"> {product?.total_varients }  variantes</span>
-                        }
-                        {/* <span className="units"> {product?.total_units} Unidades </span> */}
+                        <div className="varients p-05 rounded-lg"> {product?.total_varients }  variantes</div>
                     </div>
                 </div>
 
-                <div className="inventory-prices">
+                <span className="divider-w-height"></span>
 
+                <div className="inventory-prices">
                     <div className="retail-prices">
                         <p className="title"> precio promedio </p>
                         <span className="price"> { formatCurrecy(product?.average_price )}</span>
@@ -76,7 +88,13 @@ const ProductListItem  = ({ product }) => {
             </div>
           
             <div className="inventory-controls">
-                <button onClick={handleSettingWindow} className="inventory-item-control"> ... </button>
+                <span onClick={handleSettingWindow} className="product-list-controls pointer">
+                    <svg width="20"
+                         height="20" 
+                         fill="currentColor" className="bi bi-three-dots" viewBox="0 0 20 20">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                    </svg>
+                </span>
                 { 
                     productSettingWindow 
                     ? <ProductDetailSetting handleCloseWindow={ handleCloseWindow }/> 
@@ -86,20 +104,17 @@ const ProductListItem  = ({ product }) => {
             
 
             {   closeWindow 
-                ? <DeleteAlertMessage 
-                    productId={product?.id} 
-                    productName = {product?.name}
-                    handleSettingWindow={handleSettingWindow} 
-                    handleCloseWindow={handleCloseWindow} /> 
+                ? <ConfirmationWindow 
+                    handleConfirmartion={deleteProduct}
+                    message={ deleteMessage }
+                    // productName = {product?.name}
+                    // handleSettingWindow={handleSettingWindow} 
+                    handleCloseWindow={handleCloseWindow} 
+                    />
                 : null
             }
         </li>
     )
 }
-
-
-// const mapStateToProps = state => ({
-// });
-
 
 export default ProductListItem;

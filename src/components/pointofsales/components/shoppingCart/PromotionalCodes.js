@@ -19,15 +19,10 @@ const PromotionalCodes = ({handlePromoCodeWindow }) => {
 
     const {
         data:
-        discountData,
-        isLoading,
-        isSuccess,
-        isError,
-        refetch
+        discountData, isLoading,
+        isSuccess, isError, refetch
     } = useGetDiscountQuery(promoCode, {enabled: trigger});
 
-    // Get value here an pass up to parent
-    console.log(discountData);
 
     // const handleMessage = (msg, err) => {
     //     setAlertMessage(msg);
@@ -95,30 +90,30 @@ const PromotionalCodes = ({handlePromoCodeWindow }) => {
 
     return (
         <div className="pop-window-container">
-            {/* {
-                alertMessage !== "" ? <AlertMessage message={alertMessage} isError={isErr} /> : null
-            } */}
             <div className="pop-window">
-
-                <div  onClick={ (e) =>{ handlePromoCodeWindow(e, false); }} className="popup-window-close-btn">
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi-x-lg" viewBox="0 0 20 20">
-                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                    </svg>
-                </div>
-
-                <h2 className="popup-window-title">Aplica Código de Oferta</h2>
+                <p className="ftw-600 pt18">Aplica Código de Oferta</p>
 
                 <form onSubmit={ (e) => { submitForm(e); }} className="popup-window-input-container">
-                    <div className="popup-window-input-wrapper">
-                        <label className="popup-window-label" htmlFor="discount-input">Codigo:</label>
-                        <input  className="popup-window-input"
-                                name="discount-input"
+                    <div className="discount-input-wrapper">
+                        <label className="popup-window-label" htmlFor="discount">Codigo:</label>
+                        <input  className="form-inputs p1 rounded-lg"
+                                id="discount"
+                                name="discount"
                                 value={promoCode}
                                 onChange={ (e) => { handlePromotionalCode(e); }}
                         />  
                     </div>
+                    
 
-                    <button className="popup-window-submit-btn"  type="submit" value="Submit"> Aplicar Codigo  </button>
+                    <div className="discount-btn-container">
+                        <button onClick={ (e) =>{ handlePromoCodeWindow(e, false); }}  className="rounded-lg btn-danger p1 pointer"  type="submit" value="Submit">
+                            Cancelar 
+                        </button>
+
+                        <button className="rounded-lg btn-primary p1 pointer"  type="submit" value="Submit">
+                            Aplicar 
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

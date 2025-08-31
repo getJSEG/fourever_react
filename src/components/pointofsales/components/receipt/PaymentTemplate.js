@@ -15,14 +15,35 @@ const PaymentTemplate = ({ receiptInfo }) => {
 
     const navigate = useNavigate();
 
+
+    const [amountPaid, setAmountPaid] = useState(0)
+    console.log(receiptInfo)
+    console.log("STATUS",receiptInfo?.status)
+
     const handlePrintReceipt = () => {
-        if(receiptInfo?.receipt?.status === 'successful')
+        if(receiptInfo?.status === 'PAID')
             navigate('/print-receipt', { state: {receiptInfo} });
     }
 
+    const getAmountPaid = () => {
+        const transactionType = receiptInfo?.paymentMethod?.transactionType
+
+        if (transactionType == "credit_card"){
+            setAmountPaid(receiptInfo?.paymentMethod?.creditcardPaymentMethod?.amount )
+        }else if (transactionType == "bank_transfer") {
+            setAmountPaid(receiptInfo?.paymentMethod?.transferPaymentMethod?.amount )
+        }else {
+            setAmountPaid(receiptInfo?.paymentMethod?.cashPaymentMethod?.amount )
+        }
+    }
+
+    useEffect( () => {
+        getAmountPaid()
+    }, [receiptInfo])
+
     return (
         <div className="main-container receipt-container-window">
-            { receiptInfo?.receipt?.status === 'successful'? <PaymentSuccesful />: <PaymentFail /> }
+            { receiptInfo?.status === 'PAID'? <PaymentSuccesful />: <PaymentFail /> }
             
             <div className="receipt-info-container background-container receipt-containers">
                 <div className="payment-detail-title">
@@ -37,9 +58,9 @@ const PaymentTemplate = ({ receiptInfo }) => {
                     </div>
 
                     <div className="detail payment-details">
-                        <p className="p-detail-info"> { receiptInfo?.receipt?.order } </p>
+                        <p className="p-detail-info"> { receiptInfo?.id } </p>
                         {/* <div className="p-detail-info s-suc-infor">  */}
-                            { receiptInfo?.receipt?.status === 'successful' ? 
+                            { receiptInfo?.status === 'PAID' ? 
                             (
                             <div className="p-detail-info s-suc-infor">
                                 <div className="sm-message-cont"> <p className="sm-message"> {'Éxitoso!'}  </p></div>
@@ -64,7 +85,7 @@ const PaymentTemplate = ({ receiptInfo }) => {
                             </div>
                             }
                         {/* </div> */}
-                        <p className="p-detail-info"> { receiptInfo?.receipt?.date_created}</p>
+                        <p className="p-detail-info"> { receiptInfo?.dateCreated }</p>
                     </div>
                 </div>
 
@@ -72,11 +93,11 @@ const PaymentTemplate = ({ receiptInfo }) => {
 
                 <div className="total-payment-container">
                     <div className="total-payment-info"> Pago Total </div>
-                    <div className="total-amount"> { formatCurrecy(receiptInfo?.receipt?.grandTotal || 0) }</div>
+                    <div className="total-amount"> { formatCurrecy(receiptInfo?.totalAmount) }</div>
                 </div>
             </div>
 
-            <div onClick={ (e) => { handlePrintReceipt() }} className="receipt-print background-container receipt-containers">
+            <div onClick={ (e) => { handlePrintReceipt() }} className="receipt-print background-container pointer receipt-containers">
                 <div> <p> Imprimir </p> </div>
             </div>
 

@@ -9,23 +9,42 @@ import { useRefreshMutation } from "./persistApiSlice";
 import Template from "./Template";
 
 import { useGetLocationQuery } from "../location/locationApiSlice";
+import { useGetUsersQuery } from "../users/usersApiSlices";
+import { selectPermissions } from "../users/userSlice";
+import { setStoreInfo } from "../location/locationSlice";
+import { setProfile } from "../users/userSlice";
+import { setUserRoles } from "../users/userRolesSlice";
+import { useGetUserRolesQuery } from "../users/usersApiSlices";
+import Loading from "../../components/common/Loading";
 
-const RequireAuth = () => {
+const RequireAuth = ({ allowedRoles }) => {
 
-    const token = useSelector(selectCurrentToken)
-    const location = useLocation()
+    const token = useSelector(selectCurrentToken);
+    const location = useLocation();
 
-    const{
-        data:
-        locationData,
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    } = useGetLocationQuery()
+    const { data: locationData, isLoading, isSuccess, isError, error } = useGetLocationQuery();
+    const { data: userData, isLoading:isUserDataLoading, isSuccess: isUserDataSuccess } = useGetUsersQuery();
+    const { data: userRolesData, isLoading:isUserRolesLoading , isSuccess: isUserRolesSuccess } = useGetUserRolesQuery();
+    const dispatch = useDispatch();
+        
+    
+    // when mounting
+    useEffect( () => {
+        if(token)
+            dispatch(setStoreInfo( {...locationData} ));
+    }, [isSuccess]);
 
-    // console.log({...locationData})
+    useEffect( () => {
+        if(token)
+            dispatch(setProfile( {...userData?.profile} ));
+    }, [isUserDataSuccess]);
 
+    useEffect( () => {
+        if(token)
+            dispatch(setUserRoles({...userRolesData?.roles}));
+    }, [isUserRolesSuccess]);
+
+    // console.log(selectPermissions)
     
     // const getLocation = async() => {
     //     try{
@@ -64,13 +83,34 @@ const RequireAuth = () => {
     */
 
     // const content = isLoading ? <Loading /> : ()
-
+    // Create not authorize page
     // return content
+    // console.log("Token?:",token)
+    // console.log("roles?:", roles)
     return (
-        token
-        ? <Template> <Outlet/> </Template>
-        : <Navigate to="/login" state={{from: location }} replace />
+        
+        !token
+        ? <Navigate to="/login" state={{from: location }} replace /> 
+            : isUserRolesLoading 
+                ? <Loading /> 
+                    : userRolesData?.roles.find( role => allowedRoles?.includes(role.toLowerCase())) 
+                        ? <Template> <Outlet/> </Template> 
+                            : <Navigate to="/unathorized" state={{from: location }} replace />
+        
+        // <Template> <Outlet/> </Template>
+        // : roles?.find( role => allowedRoles?.includes(role.toLowerCase()))
+        //     ? <Template> <Outlet/> </Template>
+        //     : <Navigate to="/unathorized" state={{from: location }} replace />
+         
     )
+    // return (
+    //     roles?.find( role => allowedRoles?.includes(role.toLowerCase()))
+        
+    //     ? <Template> <Outlet/> </Template>
+    //     : token
+    //     ? <Navigate to="/unathorized" state={{from: location }} replace />
+    //     : <Navigate to="/login" state={{from: location }} replace />
+    // )
 }
 
 export default RequireAuth 

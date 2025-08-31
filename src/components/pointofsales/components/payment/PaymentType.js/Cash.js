@@ -4,21 +4,49 @@ import NumberPad from "./NumberPad";
 
 import { formatCurrecy } from "../../../../../utils/currencyFormatter";
 
-const Cash = ({ grandTotal, handlePaymentDetail }) => { 
+const Cash = ({ grandTotal, handlePaymentDetail, amountReceived }) => { 
 
     const [payAmount, setPayAmount] = useState(0);
+    const [change, setChange] = useState(0);
+    const [isChange, setIsChange] = useState(false);
     
     const handlePaymentAmount = (amount) => {
         setPayAmount(amount)
     }
 
     useEffect( () => {
-        handlePaymentDetail( {
-            'payment_type': 'cash',
-            'TotalReceived': Number(payAmount).toFixed(2)
-        })
-    }, [payAmount])
+        let setChangeAmount = 0;
+        amountReceived(payAmount);
+        if(parseFloat(payAmount) >= parseFloat(grandTotal)){
+            setChangeAmount = (Number(payAmount) - Number(grandTotal)).toFixed(2)
+            setChange(setChangeAmount);
+            setIsChange(true);
+        }else{
+            setChangeAmount = 0;
+            setChange(0);
+            setIsChange(false);
+        }
+     
+        handlePaymentDetail({
+                "transactionType": "cash",
+                "amount": Number(payAmount).toFixed(2),
+                "changeDue": setChangeAmount
+        });
+    }, [grandTotal, payAmount])
     
+
+
+    // useEffect(()=> {  
+    //     if(parseFloat(payAmount) >= parseFloat(grandTotal)){
+    //         const setChangeAmount = (Number(payAmount) - Number(grandTotal)).toFixed(2)
+    //         setChange(setChangeAmount);
+    //         setIsChange(true);
+    //     }else{
+    //         setChange(0);
+    //         setIsChange(false);
+    //     }
+    // }, [grandTotal, payAmount])
+
     // unmounts component
     useEffect( ()=> {
         return( () => { setPayAmount(0) })
@@ -35,7 +63,7 @@ const Cash = ({ grandTotal, handlePaymentDetail }) => {
             />
 
             <div className={`pos-change-due`}> 
-                <h6 >{ payAmount <= grandTotal  ? null : `CAMBIO: ${ formatCurrecy(payAmount -grandTotal) }`} </h6>
+                <h6 >{ isChange && `CAMBIO: ${ formatCurrecy(change) }`} </h6>
             </div>
         </section>
     );

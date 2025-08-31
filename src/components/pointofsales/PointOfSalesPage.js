@@ -1,73 +1,98 @@
 import React, { useEffect, Component, useState } from "react";
-
-// Functions
-// import { SKUSearch } from '../../actions/PointOfSales/POSsystem.js';
-// import { connect } from 'react-redux';
 import  { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import { useGetPosProductsQuery } from "../../features/pos/posApiSlice.js";
+import { selectStoreTax } from "../../features/location/locationSlice.js";
+import { selectIsPreTax } from "../../features/location/locationSlice.js";
+
 //  Components
 import POSProducts from "./components/products/POSProducts.js";
 import ShoppingCart from "./components/shoppingCart/ShoppingCart.js";
 import Loading from "../common/Loading.js";
-// import Checkout from "./Checkout.js";
-// import AlertMessage from "../../components/common/AlertMessage.js";
+import Payment from "./components/payment/Payment.js";
+import ErrorMessage from "../AlertMessage/ErrorMessage.js";
+import SuccessMessage from "../AlertMessage/SuccessMessage.js";
 
 // style sheet
 import '../../static/css/pages/POSSystem/POSsystem.css';
 
 // { getProductPOS, productsPOS, SKUSearch, isLoading, transactionFailMsg, resetTransactionFail}
 const PointOfSalesPage = () => {
-    const {
-        data:
-        posProductsData,
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    } = useGetPosProductsQuery()
 
-    //  CartObject Here
-    const [shoppingCart, setShoppingCart] = useState([]);
-    const [barcode, setBarcode] = useState('');
+    const { data: posProductsData, isLoading: isProductLoading, isSuccess: isProductSuccess, isError: isProductError, error: productErrro } = useGetPosProductsQuery()
+    
     let barcodeScan = '';
 
-    // This checks if the product is duplicate or not
+    const taxPercentage = useSelector(selectStoreTax);
+    const isPreTax = useSelector(selectIsPreTax);
+    
+    //  CartObject Here
+    const [shoppingCart, setShoppingCart] = useState([]);
+    const [customerInfo, setCustomerInfor] = useState({});
+    const [orderSummary, setOrderSummary] = useState({ shipping: 0, discount: 0, tax: 0, totalAmount: 0, subtotal:0, preTax: isPreTax });
+    const [paymentMethod, setPaymentMethod] = useState({})
+    const [barcode, setBarcode] = useState('');
+
+    const [displayPaymentWindow, setDisplayPaymentWindow] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
+
+    /* Hanlder Functions here */
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message);
+    }
+
+    const successMessageHandler = (message) => {
+        setSuccessMessage(message)
+    }
+
+    // handling ecery time the discount, totalamount or tax changes
+    const orderSummaryHandler = ({subtotal=orderSummary?.subtotal, discount=orderSummary?.discount, tax=taxPercentage }) => {
+        let newDiscount = 0;
+        let newTax = 0;
+
+        if (discount != 0 ){ newDiscount = ((discount/100) * subtotal);  }
+        if (tax != 0 && !isPreTax){ newTax = (tax/100) * subtotal; }
+
+        setOrderSummary( prevdata => ({ ...prevdata, 
+                                        totalAmount: Number((subtotal - newDiscount) + newTax).toFixed(2),
+                                        subtotal: subtotal,
+                                        discount: newDiscount,
+                                        tax: newTax }))
+    }
+
+    // This checks if item in shopping cart is duplicate or not
     const isDuplicate = (sku) => {
         if(shoppingCart.length < 0)
             return -1;
         return shoppingCart.findIndex( obj => obj?.sku === sku);
     }
+
     // Changes the quanitity of the cart items
     const changeQTY = (index , value) => {
         setShoppingCart( (prev)=> {
             let newArray = [...prev]
             newArray[index] = { 
                     ...newArray[index],
-                    units: value,
+                    quantity: value,
                     subtotal: newArray[index].price * value}
             return newArray
         })
     }
 
-    // Add items to array
     const addToShoppingCart = (product) => {
         const index = isDuplicate(product?.sku);
 
         if(index !== -1){
             // if item already exist then just add one to the product if ascaned or selected from the product selection window
-            const increateUnitsByOne = shoppingCart[index]?.units + 1;
+            const increateUnitsByOne = shoppingCart[index]?.quantity + 1;
             changeQTY(index, increateUnitsByOne)
         }
         if(index === -1){
             // Add new item here
-            setShoppingCart(prevlineItem => prevlineItem.concat({
-                name: product?.product.name,
-                units: 1,
-                sku: product?.sku,
-                price: Number(product?.price).toFixed(2),
-                subtotal: Number(product?.price).toFixed(2)
-                } ));
+            setShoppingCart(prev => [...prev, product]);
         }
     }
 
@@ -78,9 +103,16 @@ const PointOfSalesPage = () => {
     }
 
     // clear shopping cart
-    const handleClearShoppingCart = () => {
+    const clearShoppingcartHandler = () => {
+        setOrderSummary({ shipping: 0, discount: 0, tax: 0, totalAmount: 0, subtotal:0, preTax: isPreTax })
         setShoppingCart([]);
     }
+
+    const paymentWindowHandler = (isOpen) => {
+        setDisplayPaymentWindow(isOpen)
+    }
+
+
 
     // This handles the barcode scanner
     useEffect(() => {
@@ -106,196 +138,38 @@ const PointOfSalesPage = () => {
     },[barcodeScan])
 
 
+    // this updated the subtotal if the shoppping cart is updated
+    useEffect( () => {
+        orderSummaryHandler({ 
+            subtotal:shoppingCart.reduce( (total, product) => total + Number(product?.subtotal), 0) } );
+    }, [shoppingCart])
 
-
-
-
-
-    // Remove Item
-    // let barcodeScan = '';
-    // const [shoppingCartItems, setshoppingCartItems] = useState([]);
-    // const [totalCartItems, setTotalCartItems]  = useState(0);
-    // const [sku, setsku] = useState('');
+    // we watch for change because sometime it does not reload when mounting
+    useEffect( () => {
+        setOrderSummary({...orderSummary, preTax: isPreTax})
+    }, [isPreTax]);
     
-    // // AlertMessages
-    // const [message, setMessage] = useState("");
-    // const [isError, setIsError] = useState(false);
+    // when unmounting
+    useEffect(() => {
+        return () => { 
+            // clearDataHandler();
+        }
+    }, [])
 
-    // // Handle Alert messages
-    // const handleAlertMessage = (msg, isErr) => {
-    //     setMessage(msg);
-    //     setIsError(isErr);
-    // }
-
-    // useEffect( ()=> {
-    //     handleAlertMessage(transactionFailMsg, true);
-    // }, [transactionFailMsg]);
-
-    // // This Clear the search Query
-    // const clearSearch = (e) => {
-    //     e.preventDefault();
-    //     setsku('');
-    // }
-
-    // useEffect( () =>{
-    //     setTotalCartItems(shoppingCartItems.length)
-    // }, [shoppingCartItems])
-    // // Get the All the products varients
-    // useEffect( () =>{
-    //     getProductPOS()
-    // }, [])
-
-    // // change QTY when the product is scanned or Selected Manually
-    // const changeQTY = (sku) => {
-    //     setshoppingCartItems(shoppingCartItems.map((object, index) => {
-    //         if(object.sku === sku){
-    //             return {
-    //                     ...object,
-    //                     units: object.units + 1,
-    //                     price: object.unitPrice * (object.units + 1),
-    //                 };
-    //             }
-    //         else{
-    //             return object
-    //         }
-    //     }))
-    // }
-
-    // // Check if the sku is duplicate
-    // const isDuplicate = (sku) => {
-    //     if( shoppingCartItems !== null) {
-    //         //  finds the item in the object array
-    //         let lineItem = shoppingCartItems.findIndex( obj => obj.sku === sku);
-    //         if(lineItem !== -1){
-    //             changeQTY(shoppingCartItems[lineItem].sku)
-    //             return true;
-    //         }else{ return false; }
-    //     }
-    // }
-    
-    // // this add the item to the filtering 
-    // const addSelectedProduct = (product) => {
-    //     if(!isDuplicate(product.sku)) {
-    //         setshoppingCartItems(prevlineItem => prevlineItem.concat( product ));
-    //     } 
-    // }
-
-    // // Deleting item from the Shopping "Cart"
-    // const deleteItems = (sku) =>{ 
-    //     setshoppingCartItems( (index) => index.filter( (index, i) => { 
-    //         return index.sku !== sku 
-    //     })) 
-    // }
-
-    // const handleShoppintCart = (updateItem) => {
-    //     setshoppingCartItems(updateItem)
-    // }
-    
-    // // Adding
-    // const add = (item) => {
-    //     const updateItem = {
-    //         ...item, units: item.units + 1, price: Number(item.unitPrice) * (item.units + 1)
-    //     }
-    //     return updateItem;
-    // }
-    // // Subtranting
-    // const diff = (item) => {
-    //     let updateItem = {}
-
-    //     if(item.units === 1) { updateItem = { ...item } }
-    //     if(item.units <= 0) { updateItem = { ...item, units: 1, price: Number(item.unitPrice) * 1 } }
-    //     else{ updateItem = { ...item, units: item.units - 1, price: Number(item.unitPrice) * (item.units - 1) }  }
-
-    //     return updateItem;
-    // }
-    // const manual = (value, item) => {
-    //     let updateItem = {}
-    //     if(Number(value) <= 0) {
-    //         updateItem = { ...item, units: 1, price: Number(item.unitPrice) * 1 }
-    //     }else{
-    //         updateItem = { ...item, units: Number(value) , price: Number(item.unitPrice) * Number(value) }  
-    //     }
-    //     return updateItem;
-    // }
-    // // Updating  quantity
-    // const updateQty = (e, sku, operation) => {
-    //     e.preventDefault();
-    //     const index = shoppingCartItems.findIndex(cart =>  cart.sku === sku);
-    //     if( index === -1) return;
-
-    //     const item = shoppingCartItems[index]
-
-    //     let updateItem = {}
-    //     if(operation === 'add'){  updateItem = add(item); }
-    //     if(operation === 'diff') { updateItem = diff(item); }
-    //     if(operation === 'manual') {updateItem = manual(e.target.value, item) }
-    
-    //     const updatedArray = [...shoppingCartItems];
-    //     updatedArray[index] = updateItem;
-
-    //     setshoppingCartItems(updatedArray);
-    // }
-
-    // //getting the input from input field
-    // const handleSearchTerm = (e) => { 
-    //     e.preventDefault()
-    //     setsku(e.target.value)
-    // }
-
-    // This will check for key down in the window [FOR BARCODE SCANNER]
-    // useEffect(() => {
-    //     function handleKeyDown(e){
-
-    //         if(barcodeScan === "EnterEnter"  || barcodeScan === "EnterEnterEnter"){
-    //             barcodeScan = ''
-    //             return;
-    //         }
-    //         if( e.keyCode === 13 && barcodeScan.length > 5){
-    //             // setsku(barcodeScan)
-    //             // SKUSearch(barcodeScan).then( p => {
-    //             //     setsku('');
-    //             //     barcodeScan = '';
-    //             // })
-    //             setBarcode(barcode)
-    //             return;
-    //         }
-
-    //         if( e.keyCode === 16){ return; }
-    //         barcodeScan += e.key
-    //         setTimeout( () => {
-    //             barcodeScan = "";
-    //         }, 300)
-    //     }
-    //     document.addEventListener('keydown', handleKeyDown)
-    //     return function cleanup() { document.removeEventListener('keydown', handleKeyDown) }
-
-    // },[barcodeScan])
-    
-    // const handleTagTabs = (e) => {
-    //     setsku(e.target.innerText.trim())
-    // }
-
-    // Reset Message
-    // useEffect( ()=> {
-    //     if(message !== ""){
-    //         const timeout = setTimeout(() => {
-    //             handleAlertMessage("", false);
-    //             resetTransactionFail();
-    //         }, 5000); // 5 seconds
-    //         return () => clearTimeout(timeout);
-    //     }
-    // }, [message])
-
-    let content = isLoading ? <Loading /> : (
+    let content = isProductLoading ? <Loading /> : (
         // id=pos-system-container for component below className="main-container"
         <div id="pos-system-container" >
-            {/* { message !== "" ? <AlertMessage message={message} isError={isError}/>: null} */}
-            {/* < /> */}
+            {
+                errorMessage && 
+                <ErrorMessage 
+                    message ={ errorMessage }
+                    errorMessageHandler = { errorMessageHandler }
+                />
+            }
             
             <div id="pos-system-product-search">
-
                 {
-                    !isLoading 
+                    !isProductLoading 
                         ? <POSProducts 
                             products = {posProductsData}
                             addToShoppingCart={addToShoppingCart} 
@@ -310,17 +184,20 @@ const PointOfSalesPage = () => {
                 shoppingCart={shoppingCart}
                 removeItemFromCart={ RemoveFromShoppingCart }
                 changeQTY = { changeQTY }
-                handleClearShoppingCart={handleClearShoppingCart}
+                clearShoppingcartHandler={clearShoppingcartHandler}
+                paymentWindowHandler = { paymentWindowHandler }
+                order = {orderSummary}
+                orderHandler = { orderSummaryHandler }
             />
 
-            {/* <Checkout
-                shoppingCartItems={shoppingCartItems}
-                deleteItem = {deleteItems}
-                handleShoppintCart={handleShoppintCart}
-                totalCartItems={totalCartItems}
-                updateQty={updateQty}
-            /> */}
-    
+            { displayPaymentWindow && 
+                <Payment  paymentWindowHandler = {paymentWindowHandler}
+                          order = { orderSummary }
+                          shoppingCart={ shoppingCart } 
+                          errorMessageHandler = { errorMessageHandler}
+                        /> 
+            }
+                
         </div>
       )
 

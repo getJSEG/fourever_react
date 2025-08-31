@@ -5,16 +5,31 @@ import { connect } from 'react-redux';
 import "../../static/css/components/alertMessage.css"
 import translate from "translate"; 
 
-const AlertMessage  = ({ message, isError }) => {
+const AlertMessage  = ({ message, isError, handleAlertMsg }) => {
 
-    // isError: this variable Set if its and error or just a success message
-    // message: is the message displayed
 
+    // clear mesage and is visible
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                // clearing every item
+            handleAlertMsg(false,  '');
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [message, isError]);
+
+    // unmounting
+    useEffect(() => {
+        return () => { }
+    }, []);
+        
     return(
         <div className="banner">
             {
-            isError ?
-                <div className="error-alert-msg alert-msg">
+            isError 
+                ?<div className="error-alert-msg alert-msg">
                     <div className="msg-container">
                         <span className="alert-msg-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
@@ -24,8 +39,7 @@ const AlertMessage  = ({ message, isError }) => {
                         <p className="alert-text"> { message || '' }  </p>
                     </div>
                 </div>
-                :
-                <div className="success-alert-msg alert-msg">
+                :<div className="success-alert-msg alert-msg">
                     <div className="msg-container">
                         <span className="alert-msg-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-patch-check-fill" viewBox="0 0 16 16">

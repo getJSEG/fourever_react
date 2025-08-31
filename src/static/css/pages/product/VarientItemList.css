@@ -1,0 +1,48 @@
+.varient-lnk{
+    width: 100%;
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 5px;
+    text-decoration: none;
+    border: 1px solid red;
+    /* color: #303030; */
+}
+
+.varient-info div {
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+
+.not-important-info p{
+    font-size: 10pt;
+}
+
+.varient-info div p:nth-child(odd){
+    font-weight: 700;
+}
+
+.product:hover{
+    background-color: #cacaca;
+}
+
+.varient-image-container{
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    overflow: hidden;
+}
+.varient-image img{
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.editVarient-intput{
+    width: 3em;
+    padding: .5em;
+}

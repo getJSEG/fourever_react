@@ -3,7 +3,8 @@ import { apiSlice } from "./api/apiSlice"
 import authReducer from '../features/auth/authSlice'
 import locationReducer from '../features/location/locationSlice'
 import persistReducer  from '../features/auth/persistSlice'
-// import userSlice from '../features/users/userSlice'
+import userSlice from '../features/users/userSlice';
+import userRolesSlice from '../features/users/userRolesSlice';
 import { thunk } from 'redux-thunk';
 
 export const store = configureStore({
@@ -11,6 +12,8 @@ export const store = configureStore({
         [apiSlice.reducerPath]: apiSlice.reducer,
         auth: authReducer,
         location: locationReducer,
+        user: userSlice, 
+        userRoles: userRolesSlice,
         persist: persistReducer,
     },
     middleware: getDefaultMiddleware =>

@@ -1,0 +1,135 @@
+.setting-continer{
+    width: 100vw;
+}
+.window-containers{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu-user-info-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user-f-l-name{
+    padding-left: 1em;
+    padding-bottom: .5em;
+    text-transform: capitalize;
+    font-size: 15pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.bi{
+    fill: var(--90-half);
+    width: 2em;
+}
+
+.menu-links-container{
+    text-decoration: none;
+    color: var(--90);
+}
+
+.menu-links-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 1em 0;
+    padding: 10px 0 10px 10px;
+    gap: 1em;
+    vertical-align: middle;
+    align-items: center;
+    text-align:left;
+}
+
+.menu-links-container:hover {
+    background-color: var(--50);
+}
+
+.setting-menu{
+    display: flex;
+    position: relative;
+    padding: 0 1em 0 6em;
+    /* width: 20%; */
+    height:100vh;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.248);
+    flex-direction: column;
+    color: var(--90);
+}
+
+.setting-page-title{
+    color: var(--90);
+}
+
+
+/* Below in the information windows */
+
+.setting-half-window{
+    width: calc(100% - 30% );
+    height: 100vh;
+    padding-left: 2em;
+}
+
+.information-container{
+    border-bottom: 1px solid var(--60);
+    margin: 1em 1em;
+    padding: 1em;
+    /* display: flex;
+    flex-direction: row;
+    align-items: center; */
+}
+
+
+.setting-title{
+    padding-right: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    color: var(--90);
+}
+
+
+
+/* Hover contienr information box */
+.info-box-container {
+    position: relative; /* Needed for absolute positioning of the info box */
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
+.info-box {
+    display: none; /* Hidden by default */
+    position: absolute;
+    bottom: 100%; /* Position above the container */
+    left: 30%;
+    background-color:var(--20);
+    /* border: 1px solid var(--60); */
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.148);
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px; /* Adjust as needed */
+    z-index: 10; /* Ensure it's above other content */
+  }
+  .info-box-container:hover .info-box {
+    display: block; /* Show the info box on hover */
+  }
+
+  .info-box::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position at the bottom of the info box */
+    left: 10%;
+    margin-left: -5px; /* Center the arrow */
+    border-width: 5px;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: var(--60) transparent transparent transparent; /* Creates an upward pointing arrow */
+  }
+
+  .info-box-message{
+    color: var(--90-half);
+    font-size: 10pt;
+    
+  }

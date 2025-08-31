@@ -4,7 +4,7 @@ import { formatCurrecy } from "../../../../../utils/currencyFormatter";
 
 import CustomerDetails from "./CustomerDetails";
 
-const CreditCard = ({ grandTotal, handlePaymentDetail, handleCustomerDetails }) => { 
+const CreditCard = ({ grandTotal, handlePaymentDetail, handleCustomerDetails, amountReceived }) => { 
 
     const [lastDigits, setLastDigits] = useState("");
     const [transactionCode, seTransCode] = useState("");
@@ -35,12 +35,12 @@ const CreditCard = ({ grandTotal, handlePaymentDetail, handleCustomerDetails }) 
 
     useEffect( () => {
         handlePaymentDetail({
-            'payment_type': 'credit_card',
-            'cc_last_digits': lastDigits,
-            'TotalReceived':  Number(payAmount).toFixed(2),
-            'transaction_id': transactionCode 
-
-        })
+                "transactionType": "credit_card",
+                "amount": Number(payAmount).toFixed(2),
+                "lastDigits": lastDigits,
+                "transactionID": transactionCode
+            })
+        amountReceived(Number(payAmount).toFixed(2))
     }, [lastDigits, transactionCode, payAmount])
 
 

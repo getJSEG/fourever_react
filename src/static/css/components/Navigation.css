@@ -12,10 +12,6 @@
     z-index: 200;
 }
 
-/* .active {
-    background-color: red;
-} */
-
 li{
     list-style-type: none;
     display: inline-flex;

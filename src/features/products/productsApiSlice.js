@@ -29,7 +29,7 @@ const productsApiSlice = apiSlice.injectEndpoints({
     })
  })
 
- export const  { 
+export const { 
     useGetProductsQuery,
     useDeleteProductMutation,
     useCreateProductMutation,

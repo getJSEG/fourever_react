@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { formatCurrecy } from "../../../../../utils/currencyFormatter";
 
-const BrankTranfer = ({ grandTotal, handlePaymentDetail, handleCustomerDetails  }) => { 
+const BrankTranfer = ({ grandTotal, handlePaymentDetail, handleCustomerDetails, amountReceived }) => { 
           
     const [customerName, setCustomername] = useState("");
     const [transactionID, setTransactionID] = useState("");
@@ -31,12 +31,13 @@ const BrankTranfer = ({ grandTotal, handlePaymentDetail, handleCustomerDetails  
 
     useEffect( () => {
         handlePaymentDetail({
-            'payment_type': 'bank_transfer',
-            'bank_transfer_code': transactionID,
-            'TotalReceived':  Number(payAmount).toFixed(2)
-        });
+                "transactionType": "bank_transfer",
+                "amount": Number(payAmount).toFixed(2),
+                "transactionID": transactionID
+            });
 
         handleCustomerDetails({ "name": customerName });
+        amountReceived(Number(payAmount).toFixed(2))
 
     }, [payAmount, transactionID, customerName])
     

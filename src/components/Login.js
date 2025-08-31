@@ -9,33 +9,35 @@ import { useGetUsersQuery } from "../features/users/usersApiSlices.js";
 import '../static/css/pages/login.css'
 import Loading from "./common/Loading.js";
 
-import logo from '../static/images/company-logo-pink-trans.png'
-// import AlertMessage from "../components/common/AlertMessage.js";
-// import Loading from "../components/common/Loading.js";
+import logo from '../static/images/company-logo-pink-trans.png';
+// Component
+import SuccessMessage from "./AlertMessage/SuccessMessage.js";
+import ErrorMessage from "./AlertMessage/ErrorMessage.js";
 
 const Login = () => {
-    const userRef = useRef()
-    const errRef = useRef()
+    const userRef = useRef();
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [errMsg, setErrMsg] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate()
     const location = useLocation();
     const from = location.state?.from?.pathname || "/dashboard";
 
-    const [login, {isLoading}] = useLoginMutation()
+    const [login, {isLoading}] = useLoginMutation();
 
     const dispatch = useDispatch()
 
     useEffect( ()=> {
         userRef.current.focus()
-    }, [])
+    }, []);
 
-    useEffect( () => {
-        setErrMsg('')
-    }, [username, password])
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message)
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -43,25 +45,24 @@ const Login = () => {
         try{
             const userData = await login({ username, password }).unwrap()
 
-            // console.log(userData)
-
             dispatch(setCredentials({...userData}))
             setUsername('')
             setPassword('')
             navigate(from, { replace: true });
 
         } catch( err ) {
-            console.log(err)
             if(!err?.status){
-                setErrMsg('No Hay Conexion Con el server')
+                errorMessageHandler('No Hay Conexion Con el Servidor')
             }else if (err?.status == 400){
-                setErrMsg('Acceso Denegado')
+                errorMessageHandler('Acceso Denegado')
             }else if(err?.status == 401) {
-                setErrMsg('No autorizado')
-            }else {
-                setErrMsg('Error al, iniciar de sesión')
+                errorMessageHandler('Acceso Denegado, Usuario o Contraseña incorrecta')
+            }else if(err?.status == 500){
+                errorMessageHandler('El servidor está temporalmente fuera de servicio')
             }
-            // errRef.current.focus()
+            else {
+                errorMessageHandler('Error al, iniciar de sesión')
+            }
         }
     }
 
@@ -69,12 +70,22 @@ const Login = () => {
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePasswordInput = (e) => setPassword(e.target.value)
 
+
+    useEffect(() => {
+        return() => {
+            setErrorMessage("");
+        }
+    }, []);
+    
     const content = isLoading ? <Loading /> : (
     <section>
         <div className="login-page-container">
-            <div className="logo-container"> <img className="login-logo" src={logo}/>  </div>
 
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+           { errorMessage && <ErrorMessage message={ errorMessage }
+                                           errorMessageHandler = { errorMessageHandler }/> 
+           }
+
+            <div className="logo-container"> <img className="login-logo" src={logo}/>  </div>
 
             <div className="login-form-container">
                 <h4 className="begin-session-title"> Iniciar sesión </h4>
@@ -119,12 +130,4 @@ const Login = () => {
     return content
 }
 
-// const mapStateToProps = state => ({
-//     loginFailMsg: state.auth.loginFailMsg,
-//     isLoggedIn: state.auth.isLoggedIn,
-//     isLoading: state.auth.isLoading,
-//     isAuthenticated: state.auth.isAuthenticated
-// });
-
 export default Login
-// export default connect(mapStateToProps, {login})(Login);

@@ -23,24 +23,23 @@ const PersistLogin = () => {
     // const [persist, setPersist] = useState(false)
     // const persist = useSelector(selectPersist)
     
-    const dispatch = useDispatch()
-
-    const [persist] = usePersistMutation()
+    const dispatch = useDispatch();
+    const [persist] = usePersistMutation();
 
     useEffect( () => {
         let isMounted = true;
-        
+
         const verifyRefreshToken = async () => {
             // TOdo: First chec if the auth has token
             try{
-                const persistData = await persist().unwrap()
+                const persistData = await persist().unwrap();
                 dispatch(setCredentials({...persistData}))
-            
+        
             } catch( err ) {
-                console.log(err)
+                console.log(err);
             }
             finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
         }
 
@@ -48,22 +47,16 @@ const PersistLogin = () => {
         !token ? verifyRefreshToken() : setIsLoading(false)
         // Unmount everything
         return () => isMounted = false;
-    }, [])
+    }, []);
 
-
-    // token
-    // ? <Outlet />
-    // : isLoading
-    //     ? <Loading />  : <Outlet />
-// }
+    
 
     return (
         <>
             {
                 token
                 ? <Outlet />
-                : isLoading
-                    ? <Loading />  : <Outlet />
+                : isLoading ? <Loading /> : <Outlet />
             }
         </>
     )
