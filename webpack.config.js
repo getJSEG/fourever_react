@@ -5,7 +5,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: 'development',
-  entry: "./index.js",
+  entry: "./src/index.js",
   output: {
     clean: true,
     path: path.resolve(__dirname, "./dist"),
@@ -36,6 +36,10 @@ module.exports = {
         {
             test: /\.svg$/,
             use: ['@svgr/webpack'],
+        },
+        {
+            test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+            use: ['file-loader'],
         },
     ],
   },
