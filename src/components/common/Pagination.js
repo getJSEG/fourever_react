@@ -1,5 +1,4 @@
 import React, { useState, useEffect }from "react";
-import { connect } from 'react-redux';
 
 const Pagination  = ({ getCurrentPage, totalItems, itemPerPage }) => {
 
@@ -136,9 +135,4 @@ const Pagination  = ({ getCurrentPage, totalItems, itemPerPage }) => {
     )
 }
 
-
-const mapStateToProps = state => ({
-});
-
-
-export default connect(mapStateToProps, { })(Pagination);
+export default Pagination;

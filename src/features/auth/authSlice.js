@@ -5,6 +5,7 @@ const authSlice =  createSlice({
     initialState: { token: null },
     reducers: {
         setCredentials: ( state, action ) => {
+            // console.log("this is the authSlice: ", action)
             const { access, user } = action.payload
 
             // Save the percistend user acces token and 

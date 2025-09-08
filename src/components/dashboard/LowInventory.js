@@ -72,7 +72,7 @@ const LowInventory  = () => {
 
                 <tbody className="low-stock-table-body">
                     {
-                        subset.map( (product, index) => 
+                        subset?.map( (product, index) => 
                             (
                                 <tr className="low-stock-table-body-row" key={index}> 
                                     <td className="low-stock-table-body-colum" > 

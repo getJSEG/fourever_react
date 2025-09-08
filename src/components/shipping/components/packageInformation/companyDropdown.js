@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef }from "react";
 import { useNavigate, useParams, useLocation, Link} from "react-router-dom";
 
-import AlertMessage from "../../../common/AlertMessage.js";
-
 // imported data
 import { encomiendasCompanies } from "../../../../utils/utilsdata.js";
 import { personalShippingCompanies } from "../../../../utils/utilsdata.js";

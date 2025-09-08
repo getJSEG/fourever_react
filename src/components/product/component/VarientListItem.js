@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDeleteVariantMutation } from "../../../features/variants/variantsApiSlice";
 import { formatCurrecy } from "../../../utils/currencyFormatter";
 
-const VarientItemList  = ({ productId, variant, selectedItems, handleCheckBox, handleErrorMsgs }) => {
+const VarientItemList  = ({ productId, variant, selectedItems, handleCheckBox, errorMessageHandler, successMessageHandler }) => {
 
     const navigate = useNavigate();
 
@@ -16,11 +16,10 @@ const VarientItemList  = ({ productId, variant, selectedItems, handleCheckBox, h
         e.preventDefault();
         try{
             await deleteVariant({id: variant?.id}).unwrap();
-            handleErrorMsgs( false, true,
-                "Variente fue Borrado");
+            // success message
+            successMessageHandler("Variente fue Borrado");
         }catch (err) {
-            handleErrorMsgs( true, true,
-                err?.data?.data?.message);
+            errorMessageHandler(JSON.stringify(err?.data))
         }
     }
 

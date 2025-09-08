@@ -36,7 +36,7 @@ const PersistLogin = () => {
                 dispatch(setCredentials({...persistData}))
         
             } catch( err ) {
-                console.log(err);
+                console.log("this ERROR IS INSIDE THE PERSIST", err);
             }
             finally {
                 setIsLoading(false);

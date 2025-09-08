@@ -11,7 +11,6 @@ import { getLocations } from "../../utils/utilsdata";
 
 // Components
 import ShippingOption from "./components/ShippingOption";
-import AlertMessage from "../common/AlertMessage";
 import AllShipments from "./components/shipments/AllShipmets";
 import ErrorMessage from "../AlertMessage/ErrorMessage";
 import SuccessMessage from "../AlertMessage/SuccessMessage";
@@ -61,6 +60,7 @@ const Shipping  = ({}) => {
     useEffect( () => {
         if(packagesIsError){
             if(shippingError?.status === 400){
+                console.log(shippingError)
                 errorMessageHandler("Algo salio mal, porfavor intenta otra ves, si sigue pasando comunicate con administrador")
             }
         }

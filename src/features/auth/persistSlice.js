@@ -5,6 +5,7 @@ const persistSlice =  createSlice({
     initialState: { persist:false },
     reducers: {
         setPersist: ( state, action) => {
+            console.log("this is inside persistSlice: ",action)
             const { persist  } = action.payload
             // Save the percistend user acces token and 
             // Refresh token

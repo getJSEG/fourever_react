@@ -24,7 +24,7 @@ const Login = () => {
 
     const navigate = useNavigate()
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/dashboard";
+    const from = location.state?.from?.pathname || "/menu";
 
     const [login, {isLoading}] = useLoginMutation();
 
@@ -43,7 +43,8 @@ const Login = () => {
         e.preventDefault()
 
         try{
-            const userData = await login({ username, password }).unwrap()
+            const userData = await login({ username, password }).unwrap();
+            console.log(userData)
 
             dispatch(setCredentials({...userData}))
             setUsername('')

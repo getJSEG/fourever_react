@@ -11,7 +11,7 @@ import BarcodeGenerator from "./BarcodeGenerator";
 // TODO: Edit Single Variant Only
 // Remove the Edit Button and Move it to the Variant item
 
-const VarientList  = ({ productName, productId, variants, handleErrorMsgs }) => {
+const VarientList  = ({ productName, productId, variants, errorMessageHandler, successMessageHandler }) => {
 
 
                         
@@ -181,7 +181,8 @@ const VarientList  = ({ productName, productId, variants, handleErrorMsgs }) => 
                                                 handleCheckBox={handleCheck}
                                                 selectedItems={selectedVariant} 
                                                 productId = { productId }
-                                                handleErrorMsgs={handleErrorMsgs}
+                                                errorMessageHandler={errorMessageHandler}
+                                                successMessageHandler = { successMessageHandler }
                                                 editVarient={editVarient}
                                             />
                     })

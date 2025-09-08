@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { setCredentials, logOut } from "../../features/auth/authSlice"
 
-const baseUrl = "http://localhost:8000/api"
+// const baseUrl = "http://localhost:8000/api/"
+const baseUrl = "https://django-app-production-8c52.up.railway.app/api/"
 
 const baseQuery = fetchBaseQuery ({
     baseUrl: baseUrl,

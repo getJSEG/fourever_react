@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // import Sel
 import Selector from "../createProduct/Selector";
-import AlertMessage from "../common/AlertMessage";
+import ErrorMessage from "../AlertMessage/ErrorMessage";
 
 import { useCreateVariantMutation } from "../../features/variants/variantsApiSlice";
 import { uploadImage } from "../../utils/uploadImages";
@@ -33,10 +33,12 @@ const CreateVariantForm = ({}) => {
 
     // Message Hanling Here
     // Messages Success or error
-    const [isError, setIsError] = useState(false);
-    const [isVisible, setIsVisible] = useState(false); 
+    const [errorMessage, setErrorMessage] = useState("");
     const [message, setMessage] = useState('');
-
+    
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message)
+    }
     // this adds the items from the array if user selects it
     const categorieHandler = (option) => {
         if(!formData.categories.includes(option)){
@@ -71,45 +73,26 @@ const CreateVariantForm = ({}) => {
             await uploadImage(variant?.data?.upload, variantImages);
 
             // redirect to Product view when imges are uploaded
-            navigate(`/product/${id}`, { state: {  
-                isVisible: true, 
-                message: "Variente Creado",
-                isError: false }});
+            navigate(`/product/${id}`, { state: { successMsg: "Variente Creado" }});
         }catch(err) {
-            setIsError(true);
-            setIsVisible(true);
             if (err?.status === 400){
-                setMessage(err?.data?.error);
+                errorMessageHandler(err?.data?.error);
             }else{
-                setMessage("algo salio mal");
+                errorMessageHandler("algo salio mal");
             }
         }
     }
     
-    // handle Alert message
-    const handleAlertMsg = (isVisible, msg) => {
-        setIsVisible(isVisible);
-        setMessage(msg);
-    }
-
+    
     useEffect( () => { 
-    return() => {
-        setVariantImages([]);
-        setIsVisible(false);
-        setMessage('');
-        setIsError(false);
-    }
+    return() => { setErrorMessage('') }
     }, []);
     
     return(
         <div className="main-container ">
             {
-                isVisible 
-                ? <AlertMessage message={message} 
-                                isError={isError }
-                                handleAlertMsg={handleAlertMsg}
-                                />
-                : null
+                errorMessage && <ErrorMessage message={errorMessage}
+                                             errorMessageHandler={errorMessageHandler}/>
             }
             <p className="page-title"> This is create form Variant</p>
 

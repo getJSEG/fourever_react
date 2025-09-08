@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { connect } from "react-redux";
 
 //Style css
 import '../../static/css/components/Loading.css'
@@ -28,4 +27,4 @@ const Loading = ({}) => {
 
 
 
-export default connect() (Loading);
+export default Loading;

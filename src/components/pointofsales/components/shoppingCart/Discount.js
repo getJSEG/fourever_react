@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
+import ErrorMessage from "../../../AlertMessage/ErrorMessage";
 
-import AlertMessage from "../../../common/AlertMessage";
+// import AlertMessage from "../../../common/AlertMessage";
 
 const Discount = ({ customDiscountWindow, handleDiscount}) => {
 
     const [discountInput, setdiscountInput] =  useState("");
-    const [alertMessage, setAlertMessage] = useState("");
-    const [isDCError, setIsDCError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleMessage = (massageAlert, isErr) => {
-        setAlertMessage(massageAlert);
-        setIsDCError(isErr);
-    }
-
-    const clearMessage = () => {
-        setAlertMessage("");
-        setIsDCError(false);
+    
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message)
     }
 
     const handleInput = (e) => {
@@ -23,9 +18,9 @@ const Discount = ({ customDiscountWindow, handleDiscount}) => {
 
         if(!isNaN(discount)){
             if(discount <= 99) { setdiscountInput(e.target.value); }
-            if(discount > 99){ handleMessage("No puedes ingresar un valor mayor que 99%" , true); }
+            if(discount > 99){ errorMessageHandler("No puedes ingresar un valor mayor que 99%"); }
         }else{
-                handleMessage("Debe ser un número, sin letras ni caracteres especiales." , true);
+            errorMessageHandler("Debe ser un número, sin letras ni caracteres especiales.");
         }
     }
 
@@ -35,25 +30,18 @@ const Discount = ({ customDiscountWindow, handleDiscount}) => {
             customDiscountWindow(false);
         }
         if(isNaN(discountInput)){
-            handleMessage("Debe ser un número, sin letras ni caracteres especiales." , true);
+            errorMessageHandler("Debe ser un número, sin letras ni caracteres especiales.");
         }
     }
 
-    // Resets any messages after 3 sec.
-    useEffect( () => {
-        if(alertMessage !== '' ){
-            const timeoutId = setTimeout(() => {
-                clearMessage();
-            }, 3000);
-            return () => clearTimeout(timeoutId);
-        }
-
-    }, [alertMessage])
     
     return (
         <div className="pop-window-container">
-            { alertMessage !== "" ? <AlertMessage message={alertMessage} isError={isDCError} /> : null }
-
+            {/* { alertMessage !== "" ? <AlertMessage message={alertMessage} isError={isDCError} /> : null } */}
+            {
+                errorMessage && <ErrorMessage message={errorMessage}
+                                              errorMessageHandler={errorMessageHandler}  />
+            }
             <div className="pop-window">
                 <p className="ftw-600 pt18"> Aplica Un Descuento Personalizado </p>
 

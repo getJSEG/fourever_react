@@ -11,19 +11,20 @@ import { formatCurrecy } from "../../utils/currencyFormatter";
 import Loading from "../common/Loading";
 import VarientList from "./component/VarientList";
 import Gallery from "./component/Gallery";
-import AlertMessage from "../../components/common/AlertMessage";
+import ErrorMessage from "../AlertMessage/ErrorMessage";
+import SuccessMessage from "../AlertMessage/SuccessMessage";
 
 //Styles
 import "../../static/css/pages/product/productDetail.css"
 import "../../static/css/pages/product/varientList.css"
 import "../../static/css/pages/product/VarientItemList.css"
 
+
 const DetailedProductPage  = ({}) => {
     
     const location = useLocation();
-    let isVarError = location.state?.isError || false;
-    let varCreationMsg = location.state?.message || false;
-    let varCrearionVisible = location.state?.isVisible || '';
+
+    let successMsg = location.state?.successMsg || '';
 
     const params = useParams();
     const productId = params?.id
@@ -37,46 +38,36 @@ const DetailedProductPage  = ({}) => {
     const [availableStock, setAvailableStock] = useState(0);
 
     // Alert Mesage Handling state
-    const [isVisible, setIsVisible] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage ] = useState("");
+    const [successMessage, setSuccessMessage ] = useState("");
 
+    const errorMessageHandler = (message) => {
+        setErrorMessage(message)
+    }
 
+    const successMessageHandler = (message) => {
+        setSuccessMessage(message)
+    }
+
+    useEffect(() => {
+        successMessageHandler(successMsg)
+    }, [successMsg])
     //Sum all of the units and sets available stocks
     useEffect( () => {
         setAvailableStock(productData?.variants?.reduce( (accumulator, variant) => accumulator + variant.units, 0 ))
     }, [productData])
-
-    const handleErrorMsgs = (isErr, isVisbl, msg) => {
-        setIsError(isErr);
-        setIsVisible(isVisbl);
-        setMessage(msg);
-    }
-    // resents message and visiblitiy of message
-    const resetAlertMeg = (isVis, msg) => {
-        setIsVisible(isVis);
-        setMessage(msg)
-    }
-
-    useEffect( () => {
-        setIsVisible(varCrearionVisible);
-        setIsError(isVarError);
-        setMessage(varCreationMsg);
-    }, [isVarError, varCreationMsg, varCrearionVisible]);
-
 
 
     let content = isLoading ? <Loading /> : (
       <div className="main-container">  
         {/* Alert Message */}
         {
-            isVisible
-            ? <AlertMessage 
-                message={message}
-                isError={isError}
-                handleAlertMsg={resetAlertMeg}
-                />
-            :null
+            errorMessage && <ErrorMessage message={errorMessage} 
+                                          errorMessageHandler={errorMessageHandler}/>
+        }
+        {
+            successMessage && <SuccessMessage message={errorMessage} 
+                                            successMessageHandler={successMessageHandler}/>
         }
 
         {/* Page title */}
@@ -147,7 +138,8 @@ const DetailedProductPage  = ({}) => {
             productId={productData?.id}
             productName={productData?.name}
             variants = {productData?.variants}
-            handleErrorMsgs={handleErrorMsgs}
+            errorMessageHandler={errorMessageHandler}
+            successMessageHandler = { successMessageHandler }
         />
       </div>  
     )

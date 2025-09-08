@@ -36,15 +36,29 @@ const RequireAuth = ({ allowedRoles }) => {
 
     useEffect( () => {
         if(token)
-            dispatch(setProfile( {...userData?.profile} ));
+            dispatch(setProfile({...userData?.profile} ));
     }, [isUserDataSuccess]);
 
     useEffect( () => {
-        if(token)
-            dispatch(setUserRoles({...userRolesData?.roles}));
+        let isMounted = true;
+
+        try {
+            dispatch(setUserRoles({...userRolesData}));
+        }
+        catch ( err ){
+            console.log(err)
+        }
+
+        return () => isMounted = false;
     }, [isUserRolesSuccess]);
 
-    // console.log(selectPermissions)
+    // console.log(userRolesData?.roles)
+    // console.log("This is the isSucces of the roles: ",isUserRolesLoading);
+
+    // console.log("this is the userData: ", userData);
+    // // console.log("is Superuser: ", userData.is_superuser);
+
+    // console.log("this is the location data: ", locationData)
     
     // const getLocation = async() => {
     //     try{
@@ -92,9 +106,9 @@ const RequireAuth = ({ allowedRoles }) => {
         !token
         ? <Navigate to="/login" state={{from: location }} replace /> 
             : isUserRolesLoading 
-                ? <Loading /> 
-                    : userRolesData?.roles.find( role => allowedRoles?.includes(role.toLowerCase())) 
-                        ? <Template> <Outlet/> </Template> 
+              ? <Loading /> 
+                    : userRolesData?.roles.some( role => allowedRoles?.includes(role.toLowerCase())) 
+                      ? <Template> <Outlet/> </Template> 
                             : <Navigate to="/unathorized" state={{from: location }} replace />
         
         // <Template> <Outlet/> </Template>
