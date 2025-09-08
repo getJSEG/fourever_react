@@ -1,8 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const htmlWebpackPlugin = require('html-webpack-plugin')
-// require('babel-register')
-// const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: 'development',
@@ -50,7 +49,6 @@ module.exports = {
       inject: true
 
     }),
-    new Dotenv(),
   ],
   devServer: {
     static: {
