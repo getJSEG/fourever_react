@@ -52,7 +52,7 @@ const CreateLocation = ({}) => {
                errorMessage && <ErrorMessage message={errorMessage}
                                              errorMessageHandler={errorMessageHandler}  />
             }
-            <form onSubmit={e => onSubmit(e)} className="location-creation-form">
+            <form onSubmit={e => onSubmit(e) } className="location-creation-form">
                 <div className="setting-title">
                     <h4 className="p1">Tipo de Local: </h4>
                     <InfoBox message={"Tipo de local"}/>
@@ -146,7 +146,7 @@ const CreateLocation = ({}) => {
                         className="form-inputs p1 rounded-lg"
                         type="text"
                         name="cost_center"
-                        value={formData?.cost_center}
+                        value={formData.cost_center}
                         onChange={handleChange}
                         placeholder="Contabilidad"
                     />
@@ -160,7 +160,7 @@ const CreateLocation = ({}) => {
                         name="tax"
                         value={formData.tax}
                         onChange={handleChange}
-                        placeholder="Contabilidad"
+                        placeholder="13.00"
                     />
                 </div>
 
