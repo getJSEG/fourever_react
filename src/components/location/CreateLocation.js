@@ -36,7 +36,8 @@ const CreateLocation = ({}) => {
         setFormData( (prevData) => ({ ...prevData, [name]:value }))
     }
 
-    const onSubmit = async() => {
+    const onSubmit = async(e) => {
+        e.preventDefault();
         try{
             createLocation(formData).unwrap();
 
@@ -144,8 +145,8 @@ const CreateLocation = ({}) => {
                     <input
                         className="form-inputs p1 rounded-lg"
                         type="text"
-                        name="const_center"
-                        value={formData.cost_center}
+                        name="cost_center"
+                        value={formData?.cost_center}
                         onChange={handleChange}
                         placeholder="Contabilidad"
                     />
