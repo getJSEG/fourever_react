@@ -18,7 +18,7 @@ const CreateLocation = ({}) => {
     // else redirect to another route
     // const navigate = useNavigate()
 
-    const [createLocation] = useCreateLocationMutation();
+    const [locationCreate] = useCreateLocationMutation();
 
     const [formData, setFormData] = useState({  locationType: "", incharge:"", email:"",
         address: "", department: "", city: "", country: "",
@@ -39,7 +39,7 @@ const CreateLocation = ({}) => {
     const onSubmit = async(e) => {
         e.preventDefault();
         try{
-            createLocation(formData).unwrap();
+            locationCreate(formData).unwrap();
 
         }catch(err) {
             errorMessageHandler(JSON.stringify(err?.data))
