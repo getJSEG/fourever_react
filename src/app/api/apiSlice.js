@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { setCredentials, logOut } from "../../features/auth/authSlice"
 
-// const baseUrl = "http://localhost:8000/api/"
-const baseUrl = "https://django-app-production-8c52.up.railway.app/api/"
+// const baseUrl = "http://localhost:8000/api/";
+const baseUrl = "https://django-app-production-8c52.up.railway.app/api/";
 
 const baseQuery = fetchBaseQuery ({
     baseUrl: baseUrl,
@@ -20,19 +20,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
 
     if (result?.error?.status === 401){
-        // console.log("sending refresh Token")
         // Send Refresh Token to get new aaces token
         const refreshResult = await baseQuery({ url: '/refresh/', method:'POST',
-                                             }, api, extraOptions)
-        // console.log(refreshResult)
-
+                                            }, api, extraOptions)
         if ( refreshResult?.data ) {
             // const user = api.getState().auth.user
-            // console.log()
             // Store new token
             api.dispatch( setCredentials({ ...refreshResult.data}))
             // Retry the original query with new access token
-
             result = await baseQuery( args, api, extraOptions)
         }else{
             api.dispatch(logOut())

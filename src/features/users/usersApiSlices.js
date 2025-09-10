@@ -4,11 +4,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
             query: () => 'profile',
-            keepUnusedDataFor: 1000
+            keepUnusedDataFor: 5
         }),
         getUserRoles: builder.query({
             query: () => 'user/roles',
-            keepUnusedDataFor: 300
+            keepUnusedDataFor: 5
         }),
         createUser: builder.mutation({
             query: (data) => ({ 

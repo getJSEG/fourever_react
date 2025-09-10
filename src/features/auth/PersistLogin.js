@@ -9,7 +9,6 @@ import { selectPersist } from "./persistSlice";
 import { usePersistMutation } from "./persistApiSlice";
 import { setCredentials } from "./authSlice";
 import { setPersist } from "./persistSlice";
-
 import Loading from "../../components/common/Loading";
 // import Template from "./Template";
 
@@ -33,7 +32,7 @@ const PersistLogin = () => {
             // TOdo: First chec if the auth has token
             try{
                 const persistData = await persist().unwrap();
-                dispatch(setCredentials({...persistData}))
+                dispatch(setCredentials({...persistData}));
         
             } catch( err ) {
                 console.log("this ERROR IS INSIDE THE PERSIST", err);
