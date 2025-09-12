@@ -105,11 +105,11 @@ const AllShipments = ({packageData, isRecentlyCreatedDisplayed, errorMessageHand
                 
                 <div className="shipping-view">
                     <div onClick={() => viewHandler(true) }  className={`p1 ml1 shipping-view-btn pointer ${ viewtoggle? 'shipping-view-active' : ''}`}>
-                        <p className="">  Personalisados </p>
+                        <p className="">  Personalizado </p>
                     </div>
 
                     <div onClick={() => viewHandler(false) } className={`p1 ml1 shipping-view-btn pointer ${ !viewtoggle? 'shipping-view-active' : ''}`}>
-                        <p className="">  Encomiendas</p>
+                        <p className="">  Encomiendas </p>
                     </div>
                     
                     {

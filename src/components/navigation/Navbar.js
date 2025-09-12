@@ -13,6 +13,9 @@ const Navbar = () => {
     const isLocationAssigned = useSelector(selectIslocationAssigned);
     const userRoles = useSelector(selectRoles);
     // const isSuperUser = useSelector(selectIsSuperUser);
+
+
+    console.log(userRoles)
    
     const authLinks = (
         <Fragment>

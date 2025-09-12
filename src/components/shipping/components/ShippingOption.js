@@ -23,7 +23,7 @@ const ShippingOption  = ({handleShippingOption}) => {
                     </button>
 
                     <button onClick={ () => shippingTypeHandler("personalShipping")  } className="shipng-option-btn rounded-lg pointer remove-underline"> 
-                        PERSONALISADOS
+                        PERSONALIZADOS
                     </button>
                 </div>
             </div>

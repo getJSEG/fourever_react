@@ -49,7 +49,7 @@ const CreateShipping  = ({}) => {
     // Step 3
     const [shippingOrder, setShippingOrder] = useState({ tax: 0, discount: 0, shipping: 0, totalAmount: 0, OrderLine:[] });
     const [discount, setDiscount] = useState(0);
-    const [shippingPrice, setShippingPrice] = useState(3.00);
+    const [shippingPrice, setShippingPrice] = useState(3.50);
     const [subtotal, setSubtotal] = useState(0);
     const [grandTotal, setTotalAmount] = useState(0);
 

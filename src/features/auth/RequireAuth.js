@@ -14,19 +14,19 @@ import { selectPermissions } from "../users/userSlice";
 import { setStoreInfo } from "../location/locationSlice";
 import { setProfile } from "../users/userSlice";
 import { setUserRoles } from "../users/userRolesSlice";
-import { useGetUserRolesQuery } from "../users/usersApiSlices";
+import { useLazyGetUserRolesQuery } from "../users/usersApiSlices";
+import { selectRoles } from "../users/userRolesSlice";
 import Loading from "../../components/common/Loading";
 
 const RequireAuth = ({ allowedRoles }) => {
 
     const token = useSelector(selectCurrentToken);
+    const roles =  useSelector(selectRoles);
     const location = useLocation();
 
     const { data: locationData, isLoading, isSuccess, isError, error } = useGetLocationQuery();
     const { data: userData, isLoading:isUserDataLoading, isSuccess: isUserDataSuccess } = useGetUsersQuery();
-    const { data: userRolesData, isLoading:isUserRolesLoading , isSuccess: isUserRolesSuccess } = useGetUserRolesQuery();
     const dispatch = useDispatch();
-        
     
     // when mounting
     useEffect( () => {
@@ -39,21 +39,12 @@ const RequireAuth = ({ allowedRoles }) => {
             dispatch(setProfile({...userData?.profile} ));
     }, [isUserDataSuccess]);
 
-    useEffect( () => {
-        try {
-            dispatch(setUserRoles({...userRolesData}));
-        }catch ( err ){
-            console.log(err);
-        }
-    }, []);
-
     return (
-        
         !token
         ? <Navigate to="/login" state={{from: location }} replace /> 
-            : isUserRolesLoading 
-                ? <Loading /> 
-                    : userRolesData?.roles.some( role => allowedRoles?.includes(role.toLowerCase())) 
+            : roles?.length === 0
+                ? <Loading />
+                    : roles?.some( role => allowedRoles?.includes(role.toLowerCase())) 
                         ? <Template> <Outlet/> </Template> 
                             : <Navigate to="/unathorized" state={{from: location }} replace /> 
     )

@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 
 import { setCredentials } from "../features/auth/authSlice.js";
 import { useLoginMutation } from "../features/auth/authApiSlice.js";
+import { useLazyGetUserRolesQuery } from "../features/users/usersApiSlices.js";
+import { setUserRoles } from "../features/users/userRolesSlice.js";
 import { useGetUsersQuery } from "../features/users/usersApiSlices.js";
 import '../static/css/pages/login.css'
 import Loading from "./common/Loading.js";
@@ -27,6 +29,7 @@ const Login = () => {
     const from = location.state?.from?.pathname || "/menu";
 
     const [login, {isLoading}] = useLoginMutation();
+    const [getUserRoles] = useLazyGetUserRolesQuery();
 
     const dispatch = useDispatch()
 
@@ -44,10 +47,14 @@ const Login = () => {
 
         try{
             const userData = await login({ username, password }).unwrap();
-         
-            dispatch(setCredentials({...userData}))
-            setUsername('')
-            setPassword('')
+            const userRoles = await getUserRoles().unwrap();
+            
+    
+            dispatch(setCredentials({...userData}));
+            dispatch(setUserRoles({...userRoles}));
+           
+            setUsername('');
+            setPassword('');
             navigate(from, { replace: true });
 
         } catch( err ) {

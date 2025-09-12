@@ -9,6 +9,9 @@ import { selectPersist } from "./persistSlice";
 import { usePersistMutation } from "./persistApiSlice";
 import { setCredentials } from "./authSlice";
 import { setPersist } from "./persistSlice";
+
+import { useLazyGetUserRolesQuery } from "../users/usersApiSlices";
+import { setUserRoles } from "../users/userRolesSlice";
 import Loading from "../../components/common/Loading";
 // import Template from "./Template";
 
@@ -16,7 +19,7 @@ import Loading from "../../components/common/Loading";
 
 const PersistLogin = () => {
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
     const token = useSelector(selectCurrentToken)
 
     // const [persist, setPersist] = useState(false)
@@ -24,6 +27,7 @@ const PersistLogin = () => {
     
     const dispatch = useDispatch();
     const [persist] = usePersistMutation();
+    const [getUserRoles] = useLazyGetUserRolesQuery();
 
     useEffect( () => {
         let isMounted = true;
@@ -32,8 +36,12 @@ const PersistLogin = () => {
             // TOdo: First chec if the auth has token
             try{
                 const persistData = await persist().unwrap();
+                const userRoles = await getUserRoles().unwrap();
+                console.log("this runs");
+                // setting user roles
+                dispatch(setUserRoles({...userRoles}));
                 dispatch(setCredentials({...persistData}));
-        
+
             } catch( err ) {
                 console.log("this ERROR IS INSIDE THE PERSIST", err);
             }
@@ -41,7 +49,6 @@ const PersistLogin = () => {
                 setIsLoading(false);
             }
         }
-
         // Avoid unwated calls to verifyRefreshToken
         !token ? verifyRefreshToken() : setIsLoading(false)
         // Unmount everything

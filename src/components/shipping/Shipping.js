@@ -94,7 +94,7 @@ const Shipping  = ({}) => {
                     </div>
                     
                     <div className="shipping-button-cont mt1">
-                        <div className="create-btn pt10 rounded-lg pointer remove-underline" onClick={() =>  displayRecentHandler(true) }> { `${ isRecentlyCreatedDisplayed ? 'Ver Todos': 'Ver recientes'}`} </div>
+                        <div className="create-btn pt10 rounded-lg pointer remove-underline" onClick={() =>  displayRecentHandler(true) }> { `${ isRecentlyCreatedDisplayed ? 'Ver Todos': 'Ver Recientes'}`} </div>
                     </div>
                     
                     {

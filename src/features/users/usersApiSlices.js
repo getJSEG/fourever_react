@@ -24,6 +24,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetUsersQuery,
-    useGetUserRolesQuery,
+    useLazyGetUserRolesQuery,
     useCreateUserMutation
 } = usersApiSlice
