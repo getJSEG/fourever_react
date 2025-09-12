@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import { selectIslocationAssigned } from "../../features/users/userSlice";
 import { selectRoles } from "../../features/users/userRolesSlice";
-// import { selectIsSuperUser } from "../../features/users/userSlice";
 // Style
 import '../../static/css/components/Navigation.css'
 
@@ -12,11 +11,7 @@ const Navbar = () => {
 
     const isLocationAssigned = useSelector(selectIslocationAssigned);
     const userRoles = useSelector(selectRoles);
-    // const isSuperUser = useSelector(selectIsSuperUser);
-
-
-    console.log(userRoles)
-   
+    
     const authLinks = (
         <Fragment>
             <nav id="navigation">

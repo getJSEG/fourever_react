@@ -1,7 +1,6 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-// import { useDispatch } from "react-redux";
 
 import { selectCurrentToken } from "./authSlice";
 import { useRefreshMutation } from "./persistApiSlice";
@@ -13,8 +12,6 @@ import { useGetUsersQuery } from "../users/usersApiSlices";
 import { selectPermissions } from "../users/userSlice";
 import { setStoreInfo } from "../location/locationSlice";
 import { setProfile } from "../users/userSlice";
-import { setUserRoles } from "../users/userRolesSlice";
-import { useLazyGetUserRolesQuery } from "../users/usersApiSlices";
 import { selectRoles } from "../users/userRolesSlice";
 import Loading from "../../components/common/Loading";
 

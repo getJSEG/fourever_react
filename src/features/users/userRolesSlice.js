@@ -5,7 +5,6 @@ const userRoleSlice = createSlice({
     initialState: {roles:[]},
     reducers: {
         setUserRoles: (state, action) => {
-            console.log(action);
             const {roles} = action.payload;
             state.roles = roles
         }

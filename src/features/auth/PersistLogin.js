@@ -13,17 +13,12 @@ import { setPersist } from "./persistSlice";
 import { useLazyGetUserRolesQuery } from "../users/usersApiSlices";
 import { setUserRoles } from "../users/userRolesSlice";
 import Loading from "../../components/common/Loading";
-// import Template from "./Template";
 
-// Create a new mutation Refresh
 
 const PersistLogin = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const token = useSelector(selectCurrentToken)
-
-    // const [persist, setPersist] = useState(false)
-    // const persist = useSelector(selectPersist)
     
     const dispatch = useDispatch();
     const [persist] = usePersistMutation();
@@ -33,11 +28,9 @@ const PersistLogin = () => {
         let isMounted = true;
 
         const verifyRefreshToken = async () => {
-            // TOdo: First chec if the auth has token
             try{
                 const persistData = await persist().unwrap();
                 const userRoles = await getUserRoles().unwrap();
-                console.log("this runs");
                 // setting user roles
                 dispatch(setUserRoles({...userRoles}));
                 dispatch(setCredentials({...persistData}));
