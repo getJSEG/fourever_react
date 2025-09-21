@@ -14,11 +14,7 @@ import "../../../../static/css/pages/receipt.css"
 const PaymentTemplate = ({ receiptInfo }) => {
 
     const navigate = useNavigate();
-
-
     const [amountPaid, setAmountPaid] = useState(0)
-    console.log(receiptInfo)
-    console.log("STATUS",receiptInfo?.status)
 
     const handlePrintReceipt = () => {
         if(receiptInfo?.status === 'PAID')

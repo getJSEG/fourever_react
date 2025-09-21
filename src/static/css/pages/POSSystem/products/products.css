@@ -1,11 +1,12 @@
 .pos-products-container{
     display: flex;
-    height: calc(100vh - 12em);
+    height: calc(100vh - 13em);
     padding: 1em 2em 1em 2em;
     justify-content: center;
     flex-flow: wrap;
+    align-content: flex-start;
     overflow-y: scroll;
-    gap: 1.5em;
+    gap: 1.5em 1.5em;
 }
 
 .pos-products{

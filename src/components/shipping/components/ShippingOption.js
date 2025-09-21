@@ -30,7 +30,7 @@ const ShippingOption  = ({handleShippingOption}) => {
 
             <div className="rounded-lg pointer create-btn pt10 mt1 remove-underline" 
                   onClick={() => handleShippingOption(false) }> 
-                      Regresar 
+                    Regresar 
             </div>
 
       </div>  

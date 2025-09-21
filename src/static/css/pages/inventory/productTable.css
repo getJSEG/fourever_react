@@ -1,7 +1,7 @@
 .inventory-list{
     min-height: 30em;
     display: flex;
-    padding: 0 2em;
+    padding: 0;
     flex-direction: column;
     justify-content:flex-start;
 }
@@ -22,6 +22,17 @@
     overflow: hidden;
 }
 
+.b-title p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Truncate after 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90%;
+}
 /* Elipsis Controls */
 .inventory-controls{
     display: flex;
@@ -54,15 +65,22 @@
     display: inline;
 }
 
-.inventory-prices{
-    display: none;
+
+
+.invt-divider {
+    width: 1px;
+    height: 100%;
+    background-color: var(--70);
 }
+
+
 
 /* Desktop Styles */
 @media only screen and (min-width: 770px) {
     .inventory-prices{
         height: 50%;
         width: 45%;
+        padding: 0 1em ;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -79,8 +97,28 @@
     }    
 }
 
-@media only screen and (max-width: 820px){
+
+
+
+/* Movile Breaks */
+@media only screen and (max-width: 1000px){
+    .inventory-information{
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 850px){
+    .inventory-information{
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 800px){
     .inventory-information{
         width: 40%;
+    }
+}
+@media only screen and (max-width: 770px){
+    .avrg-prices{
+        display: none;
     }
 }

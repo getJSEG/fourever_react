@@ -71,10 +71,10 @@ const ProductListItem  = ({ product, handleDeleteProduct}) => {
                     </div>
                 </div>
 
-                <span className="divider-w-height"></span>
+                <span className="invt-divider"></span>
 
                 <div className="inventory-prices">
-                    <div className="retail-prices">
+                    <div className="avrg-prices">
                         <p className="title"> precio promedio </p>
                         <span className="price"> { formatCurrecy(product?.average_price )}</span>
                     </div>
@@ -86,6 +86,7 @@ const ProductListItem  = ({ product, handleDeleteProduct}) => {
 
                 </div>
             </div>
+
           
             <div className="inventory-controls">
                 <span onClick={handleSettingWindow} className="product-list-controls pointer">
@@ -96,9 +97,7 @@ const ProductListItem  = ({ product, handleDeleteProduct}) => {
                     </svg>
                 </span>
                 { 
-                    productSettingWindow 
-                    ? <ProductDetailSetting handleCloseWindow={ handleCloseWindow }/> 
-                    : null
+                    productSettingWindow && <ProductDetailSetting handleCloseWindow={ handleCloseWindow }/> 
                 }
             </div>
             

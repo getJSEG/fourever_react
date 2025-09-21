@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef }from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import ToggleButton from "../common/ToggleButton";
 import ErrorMessage from "../AlertMessage/ErrorMessage";
 import SuccessMessage from "../AlertMessage/SuccessMessage";
+import Loading from "../common/Loading";
 
 // utils
 import { formatCurrecy } from "../../utils/currencyFormatter";
@@ -19,6 +20,8 @@ import "../../static/css/pages/variant/variantInformation.css";
 const CreateVariantForm = ({}) => {
 
     const location = useLocation();
+    const navigate = useNavigate();
+
     let variant = useRef(location?.state?.variant)
 
     const [updateVariant, { isLoading, refetch }] = useUpdateVariantMutation();
@@ -76,13 +79,9 @@ const CreateVariantForm = ({}) => {
             variant.current = update.data;
             console.log(update)
             successMessageHandler(update?.message);
-            // handleVisibleMsg(false, true, update?.message);
         }catch (err){
-            errorMessageHandler(JSON.stringify(err?.data))
-            // console.log(err);
-            // handleVisibleMsg(true, true, err?.message);
+            errorMessageHandler(JSON.stringify(err?.data));
         }
-        
     }
 
     const handleIsEditable = async () => {
@@ -107,10 +106,6 @@ const CreateVariantForm = ({}) => {
         }
     }
 
-    // useEffect( () => {
-
-    // }, [])
-
     return(
         <div className="main-container">
             <p className="page-title"> Informacion del Variante </p>
@@ -122,6 +117,9 @@ const CreateVariantForm = ({}) => {
                 successMessage && <SuccessMessage message = {successMessage} 
                                                   successMesageHandler={successMessageHandler}/>
             }
+            <div className="rounded-lg pointer create-btn pt10 mt1 remove-underline mb1" onClick={() => navigate(-1) }> 
+                Regresar 
+            </div>
 
             <div className="background-container gray-txt-90">
                 {/* Button Container */}

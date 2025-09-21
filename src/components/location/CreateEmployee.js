@@ -101,7 +101,7 @@ const CreateEmployee = ({}) => {
 
                 <div className="setting-title">
                     <h4 className="p1">Contraseña: </h4>
-                    <InfoBox message={"nombre de usuario"}/>
+                    <InfoBox message={"La contraseña debe tener una longitud de 9 caracteres"}/>
                     <input
                         type="password"
                         className="form-inputs p1 rounded-lg"

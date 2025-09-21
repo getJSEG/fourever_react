@@ -59,8 +59,6 @@ const Payment = ({ order, shoppingCart, grandTotal, paymentWindowHandler, errorM
 
             return objectCopy
         });
-
-        console.log(paymentData)
     }, [paymentDetails]);
 
     // Updating cutomer details
@@ -87,11 +85,9 @@ const Payment = ({ order, shoppingCart, grandTotal, paymentWindowHandler, errorM
         setAmountReceived(amount)
     }
 
-    // TODO: if the number is 12 o any number is does not validte
+    // This submits payment
     const onSubmitPayment = async (e) => {
         e.preventDefault();
-        // submit payment here
-        console.log(paymentData)
         try{
             const receiptData = await checkout(paymentData).unwrap()
             navigate('/receipt', { state: {receiptData}});

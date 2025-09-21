@@ -4,13 +4,13 @@ import { apiSlice } from "../../app/api/apiSlice";
 const transactionApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ( {
         getTransactions: builder.query({
-            query: () => '/accounting/transaction-history',
+            query: ({month, year}) => `/transaction-history?month=${month}&year=${year}`,
             keepUnusedDataFor: 10,
         })
     })
  });
 
 
- export const { useGetTransactionsQuery } = transactionApiSlice
+ export const { useLazyGetTransactionsQuery } = transactionApiSlice
 
  export default transactionApiSlice;

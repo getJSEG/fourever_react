@@ -74,8 +74,7 @@ const Shipping  = ({}) => {
     }, [])
 
     return (
-        shippingOption 
-            ? <ShippingOption handleShippingOption={ handleShippingOption } /> 
+        shippingOption ? <ShippingOption handleShippingOption={ handleShippingOption } /> 
             :
                 <div className="main-container">
                     {

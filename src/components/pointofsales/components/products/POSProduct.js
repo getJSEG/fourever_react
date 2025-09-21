@@ -23,22 +23,20 @@ const POSProduct = ({product, addToCart, barcode}) => {
     }, [barcode])
 
     return (
-        <section>
-            <li onClick={ (event) => {  addProduct() } } 
-                key={product?.sku} 
-                className="pos-products">
+        <li onClick={ (event) => {  addProduct() } } 
+            key={product?.sku} 
+            className="pos-products">
 
-                <div className="pos-img-container">
-                    <img className="pos-selector-image" src={product?.image?.link} />
-                </div>
-                <div className="pos-product-info-container">
-                    <p className="pos-product-name"> { product?.product?.name } </p>
-                    <p className="pos-product-sku"> { product?.color } </p>
-                    <p className="pos-product-price"> { formatCurrecy(product?.price) } </p>
-                </div>
+            <div className="pos-img-container">
+                <img className="pos-selector-image" src={product?.image?.link} />
+            </div>
+            <div className="pos-product-info-container">
+                <p className="pos-product-name"> { product?.product?.name } </p>
+                <p className="pos-product-sku"> { product?.color } </p>
+                <p className="pos-product-price"> { formatCurrecy(product?.price) } </p>
+            </div>
 
-            </li>
-        </section>
+        </li>
     );
 }
 
